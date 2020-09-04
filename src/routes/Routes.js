@@ -1,4 +1,3 @@
-import React from 'react';
 import Index from '../component/index/Index';
 import AboutUs from '../component/aboutus/AboutUs'
 import Gallery from '../component/gallery/Gallery'
