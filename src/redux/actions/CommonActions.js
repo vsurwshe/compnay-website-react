@@ -3,7 +3,11 @@ import { CreateInstance } from "../../config/APIConfig"
 const GetUserList=()=>{
     return(dispatch)=>{
         return CreateInstance()
-            .get('users/getAllUsers/')
+            .get('/api/users/getAllUsers',{
+                headers:{
+                    "Content-Type":"application/json"
+                }
+            })
             .then(response => dispatch(SaveUserList(response.data)) )
             .catch(error => console.log("Error ", error))
     }
