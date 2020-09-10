@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
 import Footer from '../utilities/footer/Footer';
 import NavBarTop from '../utilities/navbar/Navbar';
 import * as CommonAction from "../../redux/actions/CommonActions";
@@ -34,8 +34,17 @@ class MainComponent extends Component {
             })}
         </Switch>
     }
-    
 
+    loadBreadCamp=(item)=>{
+        return <div className="breadcrumb-agile">
+            <ol className="breadcrumb">
+                <li className="breadcrumb-item">
+                    <Link href={item.link}>{item.text}</Link>
+                </li>
+                <li className="breadcrumb-item active" aria-current="page">{item.text}</li>
+            </ol>
+        </div>
+    }
 }
 
 const mapStateToProps = state => { return state; };
