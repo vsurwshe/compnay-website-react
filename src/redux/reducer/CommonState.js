@@ -34,6 +34,11 @@ const initialState={
             {icon:"fa fa-google", links:"https://plus.google.com/117290264969352066403"}
             ]
         }
+    ],
+    gallery:[
+        {img: "images/blog2.jpg", name:"Shrinivas", companyName:"Shri Gensh Holesales Shop"},
+        {img: "images/blog1.jpg", name:"Anil Rakhewar", companyName:"Shri Aishwarya Fiance"},
+        {img: "images/blog3.jpg", name:"Suraj Rakhewar", companyName:"Yogesh Bar & Restaurant"}
     ]
 }
 

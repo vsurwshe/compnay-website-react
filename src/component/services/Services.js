@@ -14,26 +14,26 @@ const Services=(props)=>{
         <p className="title-para text-center mx-auto mb-sm-5 mb-4">
             We are provide services in such a way that people come again to us and use our services. In our product we provide such services, people can survive the work easily in our applications, that's why the customer comes again to us and join with us.
         </p>
-        {  (resultArray && resultArray.length >0)&& 
-           resultArray.map((item,key)=>{
-            return <div className="row mt-lg-4" key={key}> 
-                {(item && item.length >0) && item.map((subitem,key)=>{
-                        return <div className="col-lg-4 about-in text-center" key={key}>
-                            <div className="card">
-                                <div className="card-body">
-                                    <i className={subitem.icon} aria-hidden="true" />
-                                    <h5 className="card-title mb-3">{subitem.serviceName}</h5>
-                                    <p className="card-text">{subitem.shortDescprtions}</p>
-                                </div>
-                            </div>
-                        </div>
-                    })
-                }
-            </div>
-            })
-        }            
+        {(resultArray && resultArray.length >0)&& 
+            resultArray.map((item,key)=>{
+                return <div className="row mt-lg-4" key={key}> 
+                    {(item && item.length >0) && item.map((subitem,key)=>ServiceItem(subitem,key))}
+                </div>
+         })}            
     </div>
 </section>
+}
+
+const ServiceItem=(itemData,key)=>{
+    return <div className="col-lg-4 about-in text-center" key={key}>
+    <div className="card">
+        <div className="card-body">
+            <i className={itemData.icon} aria-hidden="true" />
+            <h5 className="card-title mb-3">{itemData.serviceName}</h5>
+            <p className="card-text">{itemData.shortDescprtions}</p>
+        </div>
+    </div>
+</div>
 }
 
 export default Services;
