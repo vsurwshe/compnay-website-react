@@ -8,7 +8,7 @@ const AboutBottom=(props)=>{
         <p className="title-para text-center mx-auto mb-sm-5 mb-4">We design such simple and handlable applications. which can help full for the people. thus people easily can handle our designed applications. that's why people love our designed applications.</p>
         <div className="row package-grids">
             {(AboutBottomArray && AboutBottomArray.length >0 )&&AboutBottomArray.map((item,key)=>{
-                return <div className="col-md-4 blog-w3">
+                return <div className="col-md-4 blog-w3" key={key}>
                         <div className="blogs-top"> <img src={item.imgSrc} alt="" className="img-fluid" /> </div>
                         <div className="blogs-bottom p-4 bg-white">
                             <h4 className="text-dark font-weight-bold mb-3">

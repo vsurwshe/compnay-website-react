@@ -3,7 +3,11 @@ import { CreateInstance } from "../../config/APIConfig"
 const GetUserList=()=>{
     return(dispatch)=>{
         return CreateInstance()
-            .get('/api/users/getAllUsers',{
+            .get('/employee/getAllUsers.php ',{
+                auth: {
+                    username: 'admin',
+                    password: '123456'
+                },
                 headers:{
                     "Content-Type":"application/json"
                 }
