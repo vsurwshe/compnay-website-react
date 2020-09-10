@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UserBlog=(props)=>{
+const CustomerProducts=(props)=>{
     const {UserBlogsArray }=props
     return <div className="blog-w3ls py-5 bg-light" id="blog">
     <div className="container py-xl-5 py-lg-3">
@@ -22,7 +22,7 @@ const UserBlog=(props)=>{
                         <h3 className="my-3">{item.date}</h3>
                         <a href="single.html">
                             <i className="fa fa-user mr-2" />
-                            Posted by {item.postedBy}
+                            {item.postedBy}
                         </a>
                     </div>
                 </div>
@@ -34,4 +34,4 @@ const UserBlog=(props)=>{
 </div>
 }
 
-export default UserBlog;
+export default CustomerProducts;

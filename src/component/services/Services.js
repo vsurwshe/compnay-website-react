@@ -1,14 +1,5 @@
 import React from 'react';
 
-const ServiceArray=[
-    {icon: "fa fa-gavel mb-4",serviceName:"Mobile applications",shortDescprtions:"We design android, IOS applications app for a customer."},
-    {icon: "fa fa-paint-brush mb-4",serviceName:"web applications",shortDescprtions:"We provide such simple and attractive look web applications which can show standards of the business of people."},
-    {icon: "fa fa-magic mb-4",serviceName:"24X7",shortDescprtions:"We provide solutions at any time means 24X7."},
-    {icon: "fa fa-wrench mb-4",serviceName:"Logo Design",shortDescprtions:"We are also Provide Logo for new Startup Companys."},
-    {icon: "fa fa-cogs mb-4",serviceName:"Software Applications",shortDescprtions:"We design the Software product in such language's  Dot Net & Java. We provide Desktop applications for Billing System."},
-    {icon: "fa fa-line-chart mb-4",serviceName:"Customer Support",shortDescprtions:"We Provide the Solutions and idea for the projects in college and real time."}
-]
-
 const Services=(props)=>{
     const { ServiceArray }=props
     var itemOne, itemTwo, resultArray=[], chunk = 3;
