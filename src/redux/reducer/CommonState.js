@@ -39,13 +39,17 @@ const initialState={
         {img: "images/blog2.jpg", name:"Shrinivas", companyName:"Shri Gensh Holesales Shop"},
         {img: "images/blog1.jpg", name:"Anil Rakhewar", companyName:"Shri Aishwarya Fiance"},
         {img: "images/blog3.jpg", name:"Suraj Rakhewar", companyName:"Yogesh Bar & Restaurant"}
-    ]
+    ],
+    productList:[]
+
 }
 
 const CommonState=(state = initialState, action)=>{
     switch ( action && action.type) {
         case "SAVE_USER_LIST":
             return {...state, userList: action.userList}
+        case "SAVE_PRODUCT_LIST":
+            return {...state, productList: action.productList}
         default:
             return state
     }

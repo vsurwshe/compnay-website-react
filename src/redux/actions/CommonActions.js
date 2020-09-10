@@ -17,6 +17,19 @@ const GetUserList=()=>{
     }
 }
 
+const GetProductList=()=>{
+    return(dispatch)=>{
+        return CreateInstance()
+            .get('/product/getAllProducts.php',{
+                headers:{
+                    "Content-Type":"application/json"
+                }
+            })
+            .then(response => dispatch(SaveProductList(response.data)) )
+            .catch(error => console.log("Error ", error))
+    }
+}
+
 //---------------------------------
 
 export function SaveUserList(userList){
@@ -26,6 +39,14 @@ export function SaveUserList(userList){
     }
 }
 
+export function SaveProductList(productList){
+    return{
+        type:"SAVE_PRODUCT_LIST",
+        productList
+    }
+}
+
 export{
-    GetUserList
+    GetUserList,
+    GetProductList
 }
