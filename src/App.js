@@ -1,6 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import AdminMainLayout from './adminComponent/mainLayout/adminMainLayout';
 import MainComponent from './component/mainLayout/MainComponent';
 
-function App() { return  <MainComponent /> } 
+const App=(props)=> { 
+    const { authrization }=props.UserState
+    if(authrization && authrization !==""){
+        return <AdminMainLayout />
+    }
+    return  <MainComponent /> 
+} 
 
-export default App;
+const mapStateToProps = state => { return state; };
+export default connect(mapStateToProps)(App);

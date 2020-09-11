@@ -3,7 +3,7 @@ import { CreateInstance } from "../../config/APIConfig"
 const GetUserList=()=>{
     return(dispatch)=>{
         return CreateInstance()
-            .get('/employee/getAllUsers.php ',{
+            .get('/employee/employee.php ',{
                 headers:{
                     "Content-Type":"application/json"
                 }
@@ -16,7 +16,7 @@ const GetUserList=()=>{
 const GetProductList=()=>{
     return(dispatch)=>{
         return CreateInstance()
-            .get('/product/getAllProducts.php',{
+            .get('/product/products.php',{
                 headers:{
                     "Content-Type":"application/json"
                 }
