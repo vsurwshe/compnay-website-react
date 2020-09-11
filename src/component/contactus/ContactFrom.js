@@ -30,7 +30,7 @@ const InputTextArea=({ icon, type, rows, placeholder, name,  input,label,mainLab
 }
 
 const ContactForm=(props)=>{
-    const { reset, handleSubmit }=props
+    const { handleSubmit }=props
     return <div className="contact-top1">
         <h1 className="mb-4 text-capitalize text-dark">Get In Touch</h1>
         <form onSubmit={handleSubmit((values)=> console.log("Data ", values))} className="contact-wthree">

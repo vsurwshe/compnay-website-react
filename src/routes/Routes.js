@@ -4,6 +4,7 @@ import Gallery from '../component/gallery/Gallery'
 import Products from '../component/products/Products';
 import Blogs from '../component/blogs/Blogs'
 import ContactUs from '../component/contactus/ContactUs'
+import Login from '../component/login/Login';
 
 export default [
     {
@@ -34,6 +35,13 @@ export default [
     {
         link:"/contactus",
         text:"Contact Us",
-        componet: ContactUs
+        componet: ContactUs,
+        dontCall: true
+    },
+    {
+        link:"/login",
+        text:"",
+        componet: Login,
+        dontCall: true
     }
 ]

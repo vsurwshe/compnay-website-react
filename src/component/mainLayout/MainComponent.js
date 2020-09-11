@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route, Link, Redirect } from 'react-router-dom';
 import Footer from '../utilities/footer/Footer';
 import NavBarTop from '../utilities/navbar/Navbar';
 import * as CommonAction from "../../redux/actions/CommonActions";
@@ -28,9 +28,11 @@ class MainComponent extends Component {
 
     // this method will load the component which is selected
     RouteSwitch = (props) => {
+        const {authrization }=this.props.UserState
         return <Switch>
             {RoutesPath.map((route, index) => {
-                return <Route key={index} path={route.link} exact component={route.componet} />
+                return route.private ? <PrivateRoute authrization={authrization} component={route.componet} path={route.link} exact />
+                : <Route key={index} path={route.link} exact component={route.componet} />
             })}
         </Switch>
     }
@@ -46,6 +48,12 @@ class MainComponent extends Component {
         </div>
     }
 }
+
+const PrivateRoute = ({ component: Component, authrization, ...rest }) => (
+    <Route {...rest} render={(props) => (
+     (authrization && authrization!=="") ? <Component {...props} /> : <Redirect to='/login' />
+    )} />
+)
 
 const mapStateToProps = state => { return state; };
 const mapDispatchToProps = (dispatch) => ({

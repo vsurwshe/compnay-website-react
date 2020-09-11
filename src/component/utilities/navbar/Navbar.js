@@ -19,12 +19,15 @@ const NavBarTop=(props)=>{
 const NavBarMenu=(props)=>{
     return <ul className="navbar-nav ml-lg-auto">
     {RoutesPath.map((route, index) => {
-            return <li className="nav-item  mx-xl-5 mx-lg-3 my-lg-0 my-3" key={index}>
+            return !route.dontCall ? <li className="nav-item  mx-xl-5 mx-lg-3 my-lg-0 my-3" key={index}>
                 <Link className="nav-link" to={route.link}>{route.text}</Link>
-            </li>
+            </li> :""
         })
     }
     <li className="search my-lg-0 my-4">{NavBarSerach(props)}</li>
+    <li class="ml-lg-4 mb-lg-0 mb-4">
+    <Link className="nav-link" to="/contactus">Contact US</Link>
+    </li>
 </ul>
 }
 
