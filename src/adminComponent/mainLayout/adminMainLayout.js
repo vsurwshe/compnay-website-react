@@ -10,10 +10,10 @@ class AdminMainLayout extends Component {
 
     loadLayout=()=>{
         return <>
-            <div class="sidebar">
+            <div className="sidebar">
                 {this.loadRoutesConfig()}
             </div>
-            <div class="content" style={{paddingTop:"1.5%"}}>   
+            <div className="content" style={{paddingTop:"1.5%"}}>   
                 {this.loadRouteSwitch()}
             </div>
         </>

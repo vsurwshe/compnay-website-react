@@ -23,8 +23,10 @@ class BlogManagement extends Component {
     }
 
     loadBlogFrom=()=>{
+        const { blogData }=this.state
         return <BlogFrom
             fromAction={this.handelFromAction} 
+            initialValues={blogData}
         />
     }
 

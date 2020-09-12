@@ -11,7 +11,7 @@ const renderTextFiled=({ type, placeholder, infoText, name,  input, label, mainL
 
 const renderTextFiledCol=({ type, placeholder, infoText, name, rows, input, label, mainLableName, ...rest })=>(
     <Form.Group as={Row} controlId={name}>
-    <Form.Label column sm={2}> {label} </Form.Label>
+    <Form.Label column sm={2}> {label}: </Form.Label>
     <Col sm={10}>
       <Form.Control type={type} placeholder={placeholder} rows={rows} {...input} {...rest} />
     </Col>
@@ -20,7 +20,7 @@ const renderTextFiledCol=({ type, placeholder, infoText, name, rows, input, labe
 
 const renderTextAreaCol=({ type, placeholder, infoText, name, rows, input, label, mainLableName, ...rest })=>(
     <Form.Group as={Row} controlId={name}>
-    <Form.Label column sm={2}> {label} </Form.Label>
+    <Form.Label column sm={2}> {label}: </Form.Label>
     <Col sm={10}>
         <Form.Control as="textarea" rows={rows} placeholder={placeholder} {...input} {...rest} />
     </Col>

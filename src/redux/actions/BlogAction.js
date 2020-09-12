@@ -13,6 +13,19 @@ const GetBlogList=()=>{
     }
 }
 
+const CreateBlog=(blogData)=>{
+    return(dispatch)=>{
+        return CreateInstance()
+            .post('/blog/blogs.php ',blogData,{
+                headers:{
+                    "Content-Type":"application/json"
+                }
+            })
+            .then(response => dispatch(SaveBlogRecord(response.data)) )
+            .catch(error => console.log("Error ", error))
+    }
+}
+
 //-------------------------
 
 export function SaveBlogList(blogList){
@@ -22,6 +35,14 @@ export function SaveBlogList(blogList){
     }
 }
 
+export function SaveBlogRecord(blogRecord){
+    return{
+        type:"SAVE_BLOG_RECORD",
+        blogRecord
+    }
+}
+
 export{
-    GetBlogList
+    GetBlogList,
+    CreateBlog
 }

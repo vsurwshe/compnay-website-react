@@ -31,7 +31,7 @@ let Login=(props)=>{
         <div className="d-flex  justify-content-center">
             <button type="submit" className="btn text-black btn-block w-25">Login to account</button>
         </div>
-        {loading && <Loading />}
+        <center>{loading && <Loading />}</center>
     </form>
 </div>
 }
