@@ -13,7 +13,7 @@ class AdminMainLayout extends Component {
             <div class="sidebar">
                 {this.loadRoutesConfig()}
             </div>
-            <div class="content">   
+            <div class="content" style={{paddingTop:"1.5%"}}>   
                 {this.loadRouteSwitch()}
             </div>
         </>

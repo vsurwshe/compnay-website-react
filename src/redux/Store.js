@@ -4,6 +4,7 @@ import logger from 'redux-logger';
 import { reducer as reduxFormReducer } from 'redux-form';
 import CommonState from "../redux/reducer/CommonState";
 import UserState from '../redux/reducer/UserState';
+import BlogState from '../redux/reducer/BlogState';
 
 // this function save state into local storage.
 const saveToLocalStorage=(state)=>{
@@ -38,14 +39,15 @@ const saveToLocalStorage=(state)=>{
   const reducer = combineReducers({
     form: reduxFormReducer, // mounted under "form"
     CommonState,
-    UserState
+    UserState,
+    BlogState
   });
   
   // this functions apply logger funtionality during development mode 
   const enhancer= compose(applyMiddleware(thunk, logger));
   
   // this is common action through out application will be used
-  const initialState = reducer({},{})
+  const initialState = reducer({},{},{})
   const rootReducer = (state, action) => {
     if (action.type === 'CLEAR_DATA') {
       state = initialState
