@@ -4,13 +4,22 @@ import BlogTable from './BlogTable';
 import Loading from '../../component/utilities/loader/Loader'
 import BlogFrom from './BlogFrom';
 import {Card} from 'react-bootstrap'
-
+import * as BlogAction from '../../redux/actions/BlogAction';
+import { bindActionCreators } from 'redux';
 class BlogManagement extends Component {
     state = { 
         loadBlogTableValue: false,
         fromAction:false,
         blogData:[],
         operation:""
+    }
+
+    componentDidMount=async()=>{
+        const { blogList }=this.props.BlogState
+        const { GetBlogList }=this.props.BlogAction
+        await this.handelBlogLoadList();
+        (blogList && blogList.length <=0) && await GetBlogList();
+        await this.handelBlogLoadList();
     }
 
     handelBlogLoadList=()=>{ this.setState({loadBlogTableValue: !this.state.loadBlogTableValue})}
@@ -32,8 +41,10 @@ class BlogManagement extends Component {
 
     loadBlogTable=()=>{
         const { loadBlogTableValue }=this.state
-        return loadBlogTableValue ? <Loading /> : this.loadingBlogTable();
+        return loadBlogTableValue ?  this.loading(): this.loadingBlogTable();
     }
+
+    loading=()=><center><Loading /></center>
 
     loadingBlogTable=()=>{
         return <BlogTable 
@@ -43,4 +54,7 @@ class BlogManagement extends Component {
 }
 
 const mapStateToProps = state => { return state; };
-export default connect(mapStateToProps)(BlogManagement);
+const mapDispatchToProps= (dispatch)=>({
+    BlogAction : bindActionCreators(BlogAction, dispatch)
+})
+export default connect(mapStateToProps, mapDispatchToProps)(BlogManagement);

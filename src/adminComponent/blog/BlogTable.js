@@ -1,5 +1,5 @@
-import MaterialTable from 'material-table';
 import React from 'react';
+import MaterialTable from 'material-table';
 import { Button } from 'react-bootstrap'
 import { connect } from 'react-redux';
 import { FromActions } from '../config/Config';
@@ -42,10 +42,10 @@ const BlogTable=(props)=>{
             headerStyle: { backgroundColor: '#01579b', color: '#FFF' }
           }}
           actions={[
-            { icon: () => <div><Button variant="primary">Create Project</Button></div>,
+            { icon: () => <div><Button variant="primary">Create Blog</Button></div>,
               onClick: (event, rowData) => { fromAction(FromActions.CR,null); },
               isFreeAction: true,
-              tooltip: 'Create Project'
+              tooltip: 'Create Blog'
             }
           ]}
         />
