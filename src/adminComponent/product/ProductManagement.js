@@ -1,10 +1,55 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as ProductAction from '../../redux/actions/ProductAction'
+import ProductTable from './ProductTable';
+import ProductFrom from './ProductFrom'
+import Loading from '../../component/utilities/loader/Loader'
 
 class ProductManagement extends Component {
-    state = {  }
+    state = {  
+        loadProductListValue: false,
+        fromAction:false,
+        operation:"",
+        productData:[]
+    }
+
+    componentDidMount=async()=>{
+        const { productList }=this.props.ProductState
+        const { GetProductList }=this.props.ProductAction
+        await this.handleLoadProductListValue();
+        (productList && productList.length <=0) && await GetProductList();
+        await this.handleLoadProductListValue();
+    }
+
+    handleLoadProductListValue=()=>{this.setState({loadProductListValue : !this.state.loadProductListValue})}
+
+    handleFromAction=()=>{ this.setState({fromAction : !this.state.fromAction})}
+
     render() { 
-        return<h1>Product Management</h1>;
+        const { fromAction }=this.state
+        return fromAction ? this.loadProductFrom() : this.loadProductTable()
+    }
+
+    loadProductFrom=()=>{
+        return <ProductFrom />
+    }
+
+    loadProductTable=()=>{
+        const { loadProductListValue }=this.state
+        return loadProductListValue ? this.loading() : this.loadingProductTable()
+    }
+
+    loading=()=><center><Loading /></center>
+
+    loadingProductTable=()=>{
+        return <ProductTable 
+            fromAction={this.handleFromAction}
+        />
     }
 }
- 
-export default ProductManagement;
+const mapStateToProps=(state)=>{return state;}
+const mapDispatchToProps=(dispatch)=>({
+    ProductAction: bindActionCreators(ProductAction, dispatch)
+})
+export default connect(mapStateToProps,mapDispatchToProps)(ProductManagement);

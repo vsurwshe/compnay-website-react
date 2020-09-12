@@ -11,7 +11,7 @@ const GalleryTable=(props)=>{
     // creating columns
     const columns = [
         { title: 'Sr.\u00a0No.', field: 'key', width: 20 },
-        { title: 'Name', field: 'mime' },
+        { title: 'Name', field: 'mime'},
         { title: 'Client\u00a0Name', field: 'clientName' },
         { title: 'Company\u00a0Name', field: 'clientCompnay' },
         {
