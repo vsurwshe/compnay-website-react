@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as CommonActions from '../../redux/actions/CommonActions'
+import * as ProductAction from '../../redux/actions/ProductAction'
 import { bindActionCreators } from 'redux';
 import Loading from '../utilities/loader/Loader';
 
@@ -10,8 +10,8 @@ class Products extends Component {
     }
     
     componentDidMount=async()=>{
-        const{ productList }=this.props.CommonState
-        const{ GetProductList }=this.props.CommonActions
+        const{ productList }=this.props.ProductState
+        const{ GetProductList }=this.props.ProductAction
         await this.handleLoadProductListValue();
         (productList && productList.length <=0) && await GetProductList();
         await this.handleLoadProductListValue();
@@ -45,8 +45,8 @@ class Products extends Component {
             <div className="gallery-grid1">
                 <img src={image} alt=" " className="img-fluid" />
                 <div className="p-mask">
-                    <h4>{item.client_name}</h4>
-                    <p>{item.compnay_name}</p>
+                    <h4>{item.clientName}</h4>
+                    <p>{item.companyName}</p>
                 </div>
             </div>
     </li>
@@ -55,6 +55,6 @@ class Products extends Component {
 
 const mapStateToProps = state => { return state; };
 const mapDispatchToProps = (dispatch) => ({
-    CommonActions: bindActionCreators(CommonActions, dispatch),
+    ProductAction: bindActionCreators(ProductAction, dispatch),
 })
 export default connect(mapStateToProps,mapDispatchToProps)(Products);

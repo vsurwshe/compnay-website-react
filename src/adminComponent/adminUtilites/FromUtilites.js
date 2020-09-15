@@ -27,8 +27,34 @@ const renderTextAreaCol=({ type, placeholder, infoText, name, rows, input, label
   </Form.Group>
 )
 
+const renderFile=({ type,placeholder, onChangeFunction, infoText, name, rows, input, label, mainLableName, ...rest })=>(
+  <Form.Group as={Row} controlId={name}>
+    <Form.Label column sm={2}> {label}: </Form.Label>
+    <Col sm={10}>
+    <input id={input.name} name={input.name} type={type} onChange={event =>handleChange(event, input, onChangeFunction)} />
+      {/* <Form.File id={name} {...input} {...rest} onChange={event =>handleChange(event, input, onChangeFunction)} /> */}
+    </Col>
+  </Form.Group>
+)
+
+const handleChange = async(event, input, successFunction) => {
+  event.preventDefault();
+  let imageFile = event.target.files[0];
+  if (imageFile) {
+    var reader = new FileReader();
+    reader.onload =async()=>{
+      let byteArray=reader.result.split(",")
+      successFunction && successFunction(byteArray.length >0 && byteArray[1])
+    };
+    reader.onerror = function (error) { console.log('Error: ', error); };
+    await reader.readAsDataURL(imageFile);
+  }
+};
+
+
 export{
     renderTextFiled,
     renderTextFiledCol,
-    renderTextAreaCol
+    renderTextAreaCol,
+    renderFile
 }

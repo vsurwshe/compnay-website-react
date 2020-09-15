@@ -32,7 +32,9 @@ class ProductManagement extends Component {
     }
 
     loadProductFrom=()=>{
-        return <ProductFrom />
+        return <ProductFrom 
+            fromAction={this.handleFromAction}
+        />
     }
 
     loadProductTable=()=>{
