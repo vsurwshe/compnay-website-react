@@ -7,14 +7,19 @@ import Loading from '../../component/utilities/loader/Loader';
 import { API_EXE_TIME } from '../../config/APIConfig';
 import * as GalleryAction from '../../redux/actions/GalleryAction'
 import { renderFile, renderTextFiledCol } from '../adminUtilites/FromUtilites';
+import { FromActions } from '../config/Config';
 
 let GalleryFrom=(props)=>{
-    const { handleSubmit, reset, fromAction }=props
+    const { handleSubmit, reset, fromAction, operation }=props
     const [loading, setLoading] = useState(false);
     const [imageData, setImageData] = useState("");
     const [mine, setMine] = useState("")
     return <div style={{padding:"20px"}}>
-        <left><h2>Add Gallery Image</h2></left>
+        <left>
+            {(operation === FromActions.CR)&&<><h2>Add Image</h2> &nbsp;&nbsp;</>}
+            {(operation === FromActions.ED)&&<><h2>Edit Image</h2> &nbsp;&nbsp;</>}
+            {(operation === FromActions.DE)&&<><h2>Delete Image</h2> &nbsp;&nbsp;</>}
+        </left>
         <hr />
         <Form onSubmit={handleSubmit((values)=> CallSaveGallery({data: values, setLoading, imageData, mine, "mainProps":props}))}>
             <LoadFrom 
@@ -24,7 +29,10 @@ let GalleryFrom=(props)=>{
             <Form.Group as={Row}>
               <Col sm={{ span: 10, offset: 2 }}>
               {loading ? <Loading />:
-                <><Button type="submit" variant="success">Add Image</Button> &nbsp;&nbsp;
+                <>
+                {(operation === FromActions.CR)&&<><Button type="submit" variant="success">Add Image</Button> &nbsp;&nbsp;</>}
+                {(operation === FromActions.ED)&&<><Button type="submit" variant="success">Edit Image</Button> &nbsp;&nbsp;</>}
+                {(operation === FromActions.DE)&&<><Button type="submit" variant="success">Delete Image</Button> &nbsp;&nbsp;</>}
                  <Button type="button" variant="danger" onClick={()=>{ reset(); fromAction()}}>cancle</Button>
                 </>}
               </Col>
@@ -36,8 +44,8 @@ let GalleryFrom=(props)=>{
 const LoadFrom=(props)=>{
     const { setImageData, setMine }=props
     return <>
-        <Field name="name" component={renderTextFiledCol} type="text" label="Name" placeholder="enter image name"/>
-        <Field name="company" component={renderTextFiledCol} type="text" label="Company Name" placeholder="enter company name" />
+        <Field name="clientName" component={renderTextFiledCol} type="text" label="Name" placeholder="enter image name"/>
+        <Field name="clientCompnay" component={renderTextFiledCol} type="text" label="Company Name" placeholder="enter company name" />
         <Field name="galleryImage" component={renderFile} type="file" label="Gallery image"  setMine={setMine} onChangeFunction={setImageData}/>
     </>
 }
@@ -67,4 +75,8 @@ const mapDispatchToProps=(dispatch)=>({
 
 GalleryFrom= connect(mapStateToProps,mapDispatchToProps)(GalleryFrom);
 const afterSubmit = (result, dispatch) => dispatch(reset('GalleryFrom'));
-export default reduxForm({ form: 'GalleryFrom', onSubmitSuccess: afterSubmit })(GalleryFrom);
+export default reduxForm({ 
+    form: 'GalleryFrom', 
+    onSubmitSuccess: afterSubmit,
+    enableReinitialize: true 
+})(GalleryFrom);

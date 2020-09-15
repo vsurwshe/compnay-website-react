@@ -24,7 +24,7 @@ class ProductManagement extends Component {
 
     handleLoadProductListValue=()=>{this.setState({loadProductListValue : !this.state.loadProductListValue})}
 
-    handleFromAction=()=>{ this.setState({fromAction : !this.state.fromAction})}
+    handleFromAction=(operation, productData)=>{ this.setState({operation, productData, fromAction : !this.state.fromAction})}
 
     render() { 
         const { fromAction }=this.state
@@ -32,8 +32,11 @@ class ProductManagement extends Component {
     }
 
     loadProductFrom=()=>{
+        const { productData, operation }=this.state
         return <ProductFrom 
             fromAction={this.handleFromAction}
+            initialValues={productData}
+            operation={operation}
         />
     }
 
@@ -45,9 +48,7 @@ class ProductManagement extends Component {
     loading=()=><center><Loading /></center>
 
     loadingProductTable=()=>{
-        return <ProductTable 
-            fromAction={this.handleFromAction}
-        />
+        return <ProductTable  fromAction={this.handleFromAction} />
     }
 }
 const mapStateToProps=(state)=>{return state;}

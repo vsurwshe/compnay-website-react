@@ -38,14 +38,15 @@ class GalleryManagment extends Component {
     loading=()=><center><Loading /></center>
 
     loadingGalleryTable=()=>{
-        return <GalleryTable 
-                fromAction={this.handleFormAction}
-            />
+        return <GalleryTable  fromAction={this.handleFormAction} />
     }
 
     loadGalleryFrom=()=>{
+        const { galleryData,operation }=this.state
         return <GalleryFrom 
             fromAction={this.handleFormAction}
+            initialValues={galleryData}
+            operation={operation}
         />
     }
 }

@@ -7,7 +7,7 @@ import { FromActions } from '../config/Config';
 
 const GalleryTable=(props)=>{
     const { galleryList }=props.GalleryState
-    const { fromAction, deleteMethod }=props
+    const { fromAction }=props
     // creating columns
     const columns = [
         { title: 'Sr.\u00a0No.', field: 'key', width: 20 },
@@ -18,20 +18,20 @@ const GalleryTable=(props)=>{
           title: "",
           width:8,
           render: (rowData)=> {
-              return <i className="fa fa-pencil" style={{color:"blue"}} aria-hidden="true" onClick={()=>fromAction(FromActions.ED,rowData.data)} />
+              return <i className="fa fa-pencil" style={{color:"blue"}} aria-hidden="true" onClick={()=>fromAction(FromActions.ED,rowData.itemData)} />
           }
         },
         {
           title: "",
           width:8,
           render: (rowData)=> {
-              return <i className="fa fa-trash" style={{color:"red"}} aria-hidden="true" onClick={()=>deleteMethod(rowData.data)} />
+              return <i className="fa fa-trash" style={{color:"red"}} aria-hidden="true" onClick={()=>fromAction(FromActions.DE,rowData.itemData)} />
           }
         }  
       ];
   
       // Creating rows
-      const data = (galleryList && galleryList.length > 0) && galleryList.map((item, key) => { return { "key": (key + 1), data:item, ...item }});
+      const data = (galleryList && galleryList.length > 0) && galleryList.map((item, key) => { return { "key": (key + 1), itemData:item, ...item }});
   
       return <div style={{ maxWidth: "100%" }}>
           <MaterialTable
