@@ -48,7 +48,6 @@ const CallSaveProduct=async(props)=>{
     const { data, imageData, setLoading }=props
     const { fromAction }=props.mainProps
     const { CreateProductRecord, GetProductList}=props.mainProps.ProductAction
-    console.log("Data ", data, imageData);
     let newProductData={
         ...data,
         "data":imageData
@@ -68,5 +67,5 @@ const mapDispatchToProps=(dispatch)=>({
 })
 ProductFrom= connect(mapStateToProps,mapDispatchToProps)(ProductFrom);
 
-const afterSubmit = (result, dispatch) => dispatch(reset('Login'));
-export default reduxForm({ form: 'Login', onSubmitSuccess: afterSubmit })(ProductFrom);
+const afterSubmit = (result, dispatch) => dispatch(reset('ProductFrom'));
+export default reduxForm({ form: 'ProductFrom', onSubmitSuccess: afterSubmit })(ProductFrom);

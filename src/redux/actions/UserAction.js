@@ -13,6 +13,13 @@ const UserLogin=(bodyData)=>{
     }
 }
 
+const UserLogout=()=>{
+    console.log("Called UserLogout")
+    return(dispatch)=>{
+        return dispatch(clearData());
+    }
+}
+
 //-----------------------------
 export function saveUserAuthicate(userData){
     return{
@@ -21,6 +28,14 @@ export function saveUserAuthicate(userData){
     }
 }
 
+export function clearData(){
+    console.log("Called Clear Data")
+    return{
+        type:"CLEAR_DATA"
+    }
+}
+
 export {
-    UserLogin   
+    UserLogin,
+    UserLogout   
 }

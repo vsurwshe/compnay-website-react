@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Routes from '../routes/AdminRoutes';
+import * as UserAction from "../../redux/actions/UserAction"
 import  './Layout.scss';
+import { connect } from 'react-redux';
+
 class AdminMainLayout extends Component {
     state = {  }
     render() { 
@@ -25,7 +28,7 @@ class AdminMainLayout extends Component {
             <hr />
             {Routes.map((route,key)=><a key={key} href={route.link}><i className={route.icon}/>&nbsp;{route.text}</a>)}
             <hr />
-            <a> <i className="fa fa-sign-out" />&nbsp;Sign Out</a>
+            <a onClick={()=>this.props.UserLogout()}> <i className="fa fa-sign-out"/>Sign Out</a>
         </>
     }
 
@@ -35,5 +38,5 @@ class AdminMainLayout extends Component {
         </Switch>
     }
 }
- 
-export default AdminMainLayout;
+const mapStateToProps=state=>{return state}
+export default connect(mapStateToProps, UserAction)(AdminMainLayout);

@@ -53,6 +53,7 @@ const saveToLocalStorage=(state)=>{
   // this is common action through out application will be used
   const initialState = reducer({},{},{},{},{})
   const rootReducer = (state, action) => {
+    console.log("Called Root Reducer")
     if (action.type === 'CLEAR_DATA') {
       state = initialState
     }

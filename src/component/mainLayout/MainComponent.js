@@ -6,6 +6,7 @@ import * as CommonAction from "../../redux/actions/CommonActions";
 import RoutesPath from '../../routes/Routes';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import NotFound from '../utilities/notFound/NotFound';
 
 class MainComponent extends Component {
     state = {  }
@@ -34,6 +35,7 @@ class MainComponent extends Component {
                 return route.private ? <PrivateRoute authrization={authrization} component={route.componet} path={route.link} exact />
                 : <Route key={index} path={route.link} exact component={route.componet} />
             })}
+            <Route component={NotFound} />
         </Switch>
     }
 
