@@ -7,7 +7,7 @@ import { API_EXE_TIME } from '../../config/APIConfig';
 import * as BlogAction from '../../redux/actions/BlogAction'
 
 let CommentFrom=(props)=>{
-    const { handleSubmit, reset }=props
+    const { handleSubmit, reset, blogData }=props
     return <div className="comment-top mt-5">
     <h4>Leave a Comment</h4>
     <hr />
@@ -25,10 +25,15 @@ let CommentFrom=(props)=>{
 
 const CallSaveComment=async(props)=>{
     const { data }=props
-    const { CreateComment, GetCommentList}=props.mainProps.BlogAction
-    await CreateComment(data);
+    const { blogData }=props.mainProps
+    const { CreateComment, GetCommentListById}=props.mainProps.BlogAction
+    let newBlogData={
+        ...data,
+        "blogId": blogData && blogData.blogId
+    }
+    await CreateComment(newBlogData);
     setTimeout(async()=>{
-        await GetCommentList();
+        await GetCommentListById(blogData && blogData.blogId);
         await alert("Your Comment Added Successfully");
     },API_EXE_TIME)
 }

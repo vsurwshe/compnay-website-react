@@ -17,6 +17,8 @@ const BlogState=(state=initialState,action)=>{
             return {...state, blogData: action.blogRecord}
         case "SAVE_COMMENT_LIST":
             return {...state, commentList: action.commentList}
+        case "SAVE_COMMENT_LIST_BY_ID":
+            return {...state, commentList: action.commentList}
         case "SAVE_COMMENT_RECORD":
             return {...state, commentData: action.commentRecord}
         default:

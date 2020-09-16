@@ -11,19 +11,20 @@ const LoadSerachBlog=()=>{
 }
 
 const LoadBlogList=(props)=>{
-    const { blogs }=props
+    const { blogs, changeBlog }=props
     return  <div className="category-story tech-btm">
         <h3 className="blog-title text-dark mb-3">More Blogs</h3>
         <ul className="list-unstyled">
-            {(blogs && blogs.length >0) && blogs.map((item,key)=>LoadSingleBlog(item,key))}
+            {(blogs && blogs.length >0) && blogs.map((item,key)=>LoadSingleBlog(item,key,changeBlog))}
         </ul>
     </div>
 }
 
-const LoadSingleBlog=(item,key)=>{
+const LoadSingleBlog=(item,key,changeBlog)=>{
     return <li key={key} className="border-bottom mb-3 pb-3">
-    <i className="fa fa-caret-right mr-2" />
-    <a href="#" className="text-danger txt1">{item.blogName}</a>
+    <i className="fa fa-caret-right mr-2" onClick={()=>changeBlog(item)}>
+        &nbsp;&nbsp;<span className="text-danger txt1">{item.blogName}</span>
+    </i>
 </li>
 }
 

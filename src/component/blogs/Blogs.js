@@ -10,18 +10,37 @@ import Loading from '../utilities/loader/Loader'
 
 class Blogs extends Component {
     state = { 
-        loadBlogListValue: false
+        loadBlogListValue: false,
+        selectedBlogData:[]
     }
 
+    // this method will handle pogress bar
     handleBlogListValue=()=>{this.setState({ loadBlogListValue: !this.state.loadBlogListValue})}
 
+    // this method will handle set selected blog data 
+    handleSelectedBlogData=(blogData)=>{
+        this.setState({ selectedBlogData: blogData})
+        blogData && this.handleCommentList(blogData.blogId);
+    }
+
+    handleCommentList=async(id)=>{
+        const { GetCommentListById }=this.props.BlogAction
+        id && await GetCommentListById(id);
+    }
+
     componentDidMount=async()=>{
-        const { commentList, blogList }=this.props.BlogState
-        const { GetCommentList, GetBlogList }=this.props.BlogAction
+        const { blogList }=this.props.BlogState
+        const { GetBlogList }=this.props.BlogAction
         await this.handleBlogListValue();
         (blogList && blogList.length <=0) && await GetBlogList();
-        (commentList && commentList.length <=0) && await GetCommentList();
+        // (commentList && commentList.length <=0) && await GetCommentList();
+        await this.loadBlogAndComment();
         await this.handleBlogListValue();
+    }
+
+    loadBlogAndComment=async()=>{
+        const { blogList }=this.props.BlogState
+        await this.handleSelectedBlogData(blogList[0]);
     }
 
     render() {
@@ -45,30 +64,25 @@ class Blogs extends Component {
 
     // this will load the left sections
     loadLeftSection=()=>{
+        const { selectedBlogData }=this.state
         const { commentList, blogList }=this.props.BlogState
         return <div className="col-lg-8 left-blog-info text-left">
                {this.loadBlogBody()}
-               <LoadComments 
-                comments={commentList} 
-               />
-               <CommentFrom />
+               <LoadComments comments={commentList} />
+               <CommentFrom blogData={selectedBlogData} />
         </div>
     }
 
     loadBlogBody=()=>{
+        const { selectedBlogData }=this.state
         return <div className="blog-grid-top">
-            <div className="b-grid-top">
-                <div className="blog_info_left_grid">
-                    <a href="blogs.php">
-                        <img src="images/bg.jpg" className="img-fluid" alt="" />
-                    </a>
-                </div>
-            </div> 
+               <h2>{selectedBlogData && selectedBlogData.blogName}</h2> 
             <hr/>
-            <h3> <a href="blogs.php" className="single-text text-dark font-weight-light txt2" id="blogs_heading"> Sorry No Blogs Available....! </a></h3>
+                {(selectedBlogData && selectedBlogData.blogBody !== "") ? 
+                  <div dangerouslySetInnerHTML={{ __html: selectedBlogData.blogBody }} />
+                    :<h3 className="single-text text-dark font-weight-light txt2"> Sorry No Blogs Available....! </h3>}
+            <span id="blogs_writer" className="float-right">{(selectedBlogData && selectedBlogData.blogWriter !== "") && <>Written by -&nbsp;{selectedBlogData.blogWriter}</>}</span><br/>
             <hr/>
-            <span id="blogs_body" className="blogs_body"></span>
-            <span id="blogs_writer" className="float-right"></span>
         </div>
     }
 
@@ -77,7 +91,10 @@ class Blogs extends Component {
         const { blogList }=this.props.BlogState
         return <div className="col-lg-4 event-right mt-lg-0 mt-sm-5 mt-4">
             <div className="event-right1">
-                <LoadBlogList blogs={blogList}  />
+                <LoadBlogList 
+                    blogs={blogList}
+                    changeBlog={this.handleSelectedBlogData}
+                />
                 <LoadSerachBlog />
             </div>
         </div>
