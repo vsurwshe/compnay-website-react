@@ -25,7 +25,7 @@ const NavBarMenu=(props)=>{
         })
     }
     <li className="search my-lg-0 my-4">{NavBarSerach(props)}</li>
-    <li class="ml-lg-4 mb-lg-0 mb-4">
+    <li className="ml-lg-4 mb-lg-0 mb-4">
     <Link className="nav-link" to="/contactus">Contact US</Link>
     </li>
 </ul>

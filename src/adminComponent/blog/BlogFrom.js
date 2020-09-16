@@ -76,5 +76,5 @@ const mapDispatchToProps = (dispatch) => ({
 })
 BlogFrom= connect(mapToPropsState,mapDispatchToProps)(BlogFrom)
 
-const afterSubmit = (result, dispatch) => dispatch(reset('Login'));
-export default reduxForm({ form: 'Login', onSubmitSuccess: afterSubmit })(BlogFrom);
+const afterSubmit = (result, dispatch) => dispatch(reset('BlogFrom'));
+export default reduxForm({ form: 'BlogFrom', onSubmitSuccess: afterSubmit })(BlogFrom);

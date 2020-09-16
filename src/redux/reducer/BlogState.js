@@ -1,6 +1,8 @@
 const initialState={
     blogList:[],
-    blogData:[]
+    blogData:[],
+    commentList:[],
+    commentData:[]
 }
 
 const BlogState=(state=initialState,action)=>{
@@ -13,6 +15,10 @@ const BlogState=(state=initialState,action)=>{
             return {...state, blogData: action.blogRecord}
         case "SAVE_BLOG_DELETE_RECORD":
             return {...state, blogData: action.blogRecord}
+        case "SAVE_COMMENT_LIST":
+            return {...state, commentList: action.commentList}
+        case "SAVE_COMMENT_RECORD":
+            return {...state, commentData: action.commentRecord}
         default:
             return state;
     }

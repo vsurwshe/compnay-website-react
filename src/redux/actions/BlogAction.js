@@ -13,10 +13,37 @@ const GetBlogList=()=>{
     }
 }
 
+const GetCommentList=()=>{
+    return(dispatch)=>{
+        return CreateInstance()
+            .get('/comment/comment.php',{
+                headers:{
+                    "Content-Type":"application/json"
+                }
+            })
+            .then(response => dispatch(saveCommentList(response.data)) )
+            .catch(error => console.log("Error ", error))
+    }
+}
+
+
 const CreateBlog=(blogData)=>{
     return(dispatch)=>{
         return CreateInstance()
             .post('/blog/blogs.php ',blogData,{
+                headers:{
+                    "Content-Type":"application/json"
+                }
+            })
+            .then(response => dispatch(saveBlogRecord(response.data)) )
+            .catch(error => console.log("Error ", error))
+    }
+}
+
+const CreateComment=(commentData)=>{
+    return(dispatch)=>{
+        return CreateInstance()
+            .post('/comment/comment.php',commentData,{
                 headers:{
                     "Content-Type":"application/json"
                 }
@@ -61,12 +88,28 @@ export function saveBlogList(blogList){
     }
 }
 
+export function saveCommentList(commentList){
+    return{
+        type:"SAVE_COMMENT_LIST",
+        commentList
+    }
+}
+
 export function saveBlogRecord(blogRecord){
     return{
         type:"SAVE_BLOG_RECORD",
         blogRecord
     }
 }
+
+export function saveCommentRecord(commentRecord){
+    return{
+        type:"SAVE_COMMENT_RECORD",
+        commentRecord
+    }
+}
+
+
 
 export function saveUpdateBlogRecord(blogRecord){
     return{
@@ -84,7 +127,9 @@ export function saveDeleteBlogRecord(blogRecord){
 
 export{
     GetBlogList,
+    GetCommentList,
     CreateBlog,
     UpdateBlogRecord,
-    DeleteBlogRecord
+    DeleteBlogRecord,
+    CreateComment
 }

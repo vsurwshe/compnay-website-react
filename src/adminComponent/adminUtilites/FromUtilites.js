@@ -1,6 +1,34 @@
 import React from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
 
+
+const renderInputFiled=({type, placeholder, infoText, name,  input, label, mainLableName, ...rest })=>(
+<div className="form-group">
+      <input 
+      className="form-control" 
+      type={type} 
+      name={name} 
+      id={name} 
+      placeholder={placeholder}  
+      {...input}
+      {...rest}
+      />
+</div>
+)
+
+const renderInputTextArea=({placeholder, name,  input, ...rest})=>(
+  <div className="form-group">
+    <textarea 
+      className="form-control" 
+      name={name} 
+      id={name}
+      placeholder={placeholder}
+      {...input}
+      {...rest}
+    ></textarea>
+  </div>
+)
+
 const renderTextFiled=({ type, placeholder, infoText, name,  input, label, mainLableName, ...rest })=>{
     return <Form.Group controlId={name}>
     <Form.Label>{label}</Form.Label>
@@ -57,5 +85,7 @@ export{
     renderTextFiled,
     renderTextFiledCol,
     renderTextAreaCol,
-    renderFile
+    renderFile,
+    renderInputFiled,
+    renderInputTextArea
 }

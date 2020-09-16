@@ -1,10 +1,35 @@
 import React, { Component } from 'react';
+import {LoadSerachBlog, LoadBlogList, LoadComments} from './BlogsUtilites'
+import CommentFrom from './CommentFrom'
+import * as BlogAction from '../../redux/actions/BlogAction'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import Loading from '../utilities/loader/Loader'
+
+
 
 class Blogs extends Component {
-    state = {  }
-    render() { 
-        return this.loadMainSection();
+    state = { 
+        loadBlogListValue: false
     }
+
+    handleBlogListValue=()=>{this.setState({ loadBlogListValue: !this.state.loadBlogListValue})}
+
+    componentDidMount=async()=>{
+        const { commentList, blogList }=this.props.BlogState
+        const { GetCommentList, GetBlogList }=this.props.BlogAction
+        await this.handleBlogListValue();
+        (blogList && blogList.length <=0) && await GetBlogList();
+        (commentList && commentList.length <=0) && await GetCommentList();
+        await this.handleBlogListValue();
+    }
+
+    render() {
+        const { loadBlogListValue }=this.state 
+        return loadBlogListValue ? this.loadLoading() : this.loadMainSection(); 
+    }
+
+    loadLoading=()=><center><Loading /></center>
 
     loadMainSection=()=>{
         return  <div className="blog-w3l pt-5">
@@ -20,10 +45,13 @@ class Blogs extends Component {
 
     // this will load the left sections
     loadLeftSection=()=>{
+        const { commentList, blogList }=this.props.BlogState
         return <div className="col-lg-8 left-blog-info text-left">
                {this.loadBlogBody()}
-               {this.loadCommentForm()} 
-               {this.loadComments()}
+               <LoadComments 
+                comments={commentList} 
+               />
+               <CommentFrom />
         </div>
     }
 
@@ -44,70 +72,20 @@ class Blogs extends Component {
         </div>
     }
 
-    loadComments=()=>{
-        return <div className="comment-top mt-4" >
-            <h4>Comments</h4>
-            <br/>
-            <div className="media">
-                <div className="media-body pt-xl-2 pl-3" id="commentBlog">
-                </div>
-            </div>
-        </div>
-    }
-
-    loadCommentForm=()=>{
-        return <div className="comment-top mt-5">
-        <h4>Leave a Comment</h4>
-        <hr />
-        <h3 id="commentResult"></h3>
-        <div className="comment-bottom">
-            <form id="leaveForm" method="POST">
-                <div className="form-group">
-                    <input className="form-control" type="text" name="Name" id="Name" placeholder="Name" required="" />
-                </div>
-                <div className="form-group">
-                    <input className="form-control" type="email" name="Email" id="Email" placeholder="Email" required="" />
-                </div>
-                <div className="form-group">
-                    <textarea className="form-control" name="Message" id="Message" placeholder="Message..." required=""></textarea>
-                </div>
-                <button type="submit" name="Submit" className="btn btn-primary submit">Submit Your Comment</button>
-            </form>
-        </div>
-    </div>
-    }
-
     // this will load the right section
     loadRightSection=()=>{
+        const { blogList }=this.props.BlogState
         return <div className="col-lg-4 event-right mt-lg-0 mt-sm-5 mt-4">
             <div className="event-right1">
-                {this.loadBlogList()}
-                {this.loadSerachBlog()}
+                <LoadBlogList blogs={blogList}  />
+                <LoadSerachBlog />
             </div>
         </div>
     }
-
-    loadBlogList=()=>{
-        return  <div className="category-story tech-btm">
-            <h3 className="blog-title text-dark mb-3">More Blogs</h3>
-            <ul className="list-unstyled">
-                <li className="border-bottom mb-3 pb-3">
-                    <i className="fa fa-caret-right mr-2" />
-                    <a href="#" className="text-danger txt1" onclick="">gghjghd</a>
-                </li>
-            </ul>
-        </div>
-    }
-
-    loadSerachBlog=()=>{
-        return   <div className="search1">
-        <h3 className="blog-title text-dark mb-3">Search</h3>
-        <form className="form-inline" action="#" method="post">
-            <input className="form-control rounded-0 mr-sm-2" type="search" placeholder="Search Here" aria-label="Search" required />
-            <button className="btn bg-dark text-white rounded-0 mt-3" type="submit">Search</button>
-        </form>
-    </div>
-    }
 }
- 
-export default Blogs;
+
+const mapStateToProps=(state)=>{return state;}
+const mapDispatchToProps=(dispatch)=>({
+    BlogAction: bindActionCreators(BlogAction, dispatch)
+})
+export default connect(mapStateToProps,mapDispatchToProps)(Blogs);
