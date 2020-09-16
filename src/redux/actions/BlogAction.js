@@ -8,7 +8,7 @@ const GetBlogList=()=>{
                     "Content-Type":"application/json"
                 }
             })
-            .then(response => dispatch(SaveBlogList(response.data)) )
+            .then(response => dispatch(saveBlogList(response.data)) )
             .catch(error => console.log("Error ", error))
     }
 }
@@ -21,28 +21,70 @@ const CreateBlog=(blogData)=>{
                     "Content-Type":"application/json"
                 }
             })
-            .then(response => dispatch(SaveBlogRecord(response.data)) )
+            .then(response => dispatch(saveBlogRecord(response.data)) )
+            .catch(error => console.log("Error ", error))
+    }
+}
+
+const UpdateBlogRecord=(id,blogData)=>{
+    return(dispatch)=>{
+        return CreateInstance()
+            .put('/blog/blogs.php/'+id,blogData,{
+                headers:{
+                    "Content-Type":"application/json"
+                }
+            })
+            .then(response => dispatch(saveBlogRecord(response.data)) )
+            .catch(error => console.log("Error ", error))
+    }
+}
+
+const DeleteBlogRecord=(id)=>{
+    return(dispatch)=>{
+        return CreateInstance()
+            .delete('/blog/blogs.php/'+id,{
+                headers:{
+                    "Content-Type":"application/json"
+                }
+            })
+            .then(response => dispatch(saveBlogRecord(response.data)) )
             .catch(error => console.log("Error ", error))
     }
 }
 
 //-------------------------
 
-export function SaveBlogList(blogList){
+export function saveBlogList(blogList){
     return{
         type:"SAVE_BLOG_LIST",
         blogList
     }
 }
 
-export function SaveBlogRecord(blogRecord){
+export function saveBlogRecord(blogRecord){
     return{
         type:"SAVE_BLOG_RECORD",
         blogRecord
     }
 }
 
+export function saveUpdateBlogRecord(blogRecord){
+    return{
+        type:"SAVE_BLOG_UPDATE_RECORD",
+        blogRecord
+    }
+}
+
+export function saveDeleteBlogRecord(blogRecord){
+    return{
+        type:"SAVE_BLOG_DELETE_RECORD",
+        blogRecord
+    }
+}
+
 export{
     GetBlogList,
-    CreateBlog
+    CreateBlog,
+    UpdateBlogRecord,
+    DeleteBlogRecord
 }
