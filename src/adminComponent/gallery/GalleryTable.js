@@ -13,7 +13,7 @@ const GalleryTable=(props)=>{
         { title: 'Sr.\u00a0No.', field: 'key', width: 20 },
         { title: 'Image\u00a0Name', field: 'mime'},
         { title: 'Event\u00a0Name', field: 'clientName' },
-        { title: 'Company\u00a0Name', field: 'clientCompnay' },
+        { title: 'Company\u00a0Name', field: 'clientCompany' },
         {
           title: "",
           width:8,

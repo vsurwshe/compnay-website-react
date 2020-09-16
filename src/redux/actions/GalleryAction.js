@@ -26,6 +26,32 @@ const CreateGalleryRecord=(galleryData)=>{
     }
 }
 
+const UpdateGalleryRecord=(id,galleryData)=>{
+    return(dispatch)=>{
+        return CreateInstance()
+            .put('/gallery/gallery.php/'+id,galleryData,{
+                headers:{
+                    "Content-Type":"application/json"
+                }
+            })
+            .then(response => dispatch(saveGalleryUpdateRecord(response.data)))
+            .catch(error => console.log("Error ", error))
+    }
+}
+
+const DeleteGalleryRecord=(id)=>{
+    return(dispatch)=>{
+        return CreateInstance()
+            .delete('/gallery/gallery.php/'+id,{
+                headers:{
+                    "Content-Type":"application/json"
+                }
+            })
+            .then(response => dispatch(saveGalleryDeleteRecord(response.data)))
+            .catch(error => console.log("Error ", error))
+    }
+}
+
 //-----------------------------
 
 export function saveGalleryList(galleryList){
@@ -42,7 +68,23 @@ export function saveGalleryRecord(galleryData){
     }
 }
 
+export function saveGalleryUpdateRecord(galleryData){
+    return{
+        type:"SAVE_GALLERY_UPDATE_RECORD",
+        galleryData
+    }
+}
+
+export function saveGalleryDeleteRecord(galleryData){
+    return{
+        type:"SAVE_GALLERY_DELETE_RECORD",
+        galleryData
+    }
+}
+
 export{
     GetGalleryList,
     CreateGalleryRecord,
+    UpdateGalleryRecord,
+    DeleteGalleryRecord
 }

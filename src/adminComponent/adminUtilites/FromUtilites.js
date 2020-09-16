@@ -44,7 +44,7 @@ const handleChange = async(event, input, successFunction, setMine) => {
     var reader = new FileReader();
     reader.onload =async()=>{
       let byteArray=reader.result.split(",")
-      setMine && setMine(imageFile.name+imageFile.type);
+      setMine && setMine(imageFile.name);
       successFunction && successFunction(byteArray.length >0 && byteArray[1])
     };
     reader.onerror = function (error) { console.log('Error: ', error); };

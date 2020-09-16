@@ -10,7 +10,7 @@ import { renderFile, renderTextFiledCol } from '../adminUtilites/FromUtilites';
 import { FromActions } from '../config/Config';
 
 let GalleryFrom=(props)=>{
-    const { handleSubmit, reset, fromAction, operation }=props
+    const { handleSubmit, reset, fromAction, operation, initialValues }=props
     const [loading, setLoading] = useState(false);
     const [imageData, setImageData] = useState("");
     const [mine, setMine] = useState("")
@@ -25,6 +25,8 @@ let GalleryFrom=(props)=>{
             <LoadFrom 
                 setImageData={setImageData}
                 setMine={setMine}
+                initialValues={initialValues}
+                operation={operation}
             />
             <Form.Group as={Row}>
               <Col sm={{ span: 10, offset: 2 }}>
@@ -42,25 +44,33 @@ let GalleryFrom=(props)=>{
 }
 
 const LoadFrom=(props)=>{
-    const { setImageData, setMine }=props
+    const { setImageData, setMine, operation, initialValues }=props
     return <>
         <Field name="clientName" component={renderTextFiledCol} type="text" label="Name" placeholder="enter image name"/>
-        <Field name="clientCompnay" component={renderTextFiledCol} type="text" label="Company Name" placeholder="enter company name" />
-        <Field name="galleryImage" component={renderFile} type="file" label="Gallery image"  setMine={setMine} onChangeFunction={setImageData}/>
+        <Field name="clientCompany" component={renderTextFiledCol} type="text" label="Company Name" placeholder="enter company name" />
+        { (operation === FromActions.ED || operation === FromActions.DE)? 
+             <img src={'data:image/jpeg;base64,'+initialValues.data} alt=" " style={{width:"25%", height:"20%", float:"right"}} class="img-fluid" />
+            :<Field name="galleryImage" component={renderFile} type="file" label="Gallery image"  setMine={setMine} onChangeFunction={setImageData}/>}
     </>
 }
 
 const CallSaveGallery=async(props)=>{
     const { data, imageData, setLoading, mine }=props
-    const { fromAction }=props.mainProps
-    const { CreateGalleryRecord, GetGalleryList}=props.mainProps.GalleryAction
+    const { fromAction, operation, initialValues }=props.mainProps
+    const { CreateGalleryRecord, UpdateGalleryRecord, DeleteGalleryRecord, GetGalleryList}=props.mainProps.GalleryAction
     let newGalleryData={
         ...data,
         "data":imageData,
         "mine":mine
     }
     await setLoading(true);
-    await CreateGalleryRecord(newGalleryData);
+    if(operation === FromActions.ED && initialValues){
+        await UpdateGalleryRecord(initialValues.id,data);
+    }else if(operation === FromActions.DE && initialValues){
+        await DeleteGalleryRecord(initialValues.id);
+    }else{
+        await CreateGalleryRecord(newGalleryData);
+    }
     setTimeout(async()=>{
         await GetGalleryList();
         await setLoading(false);
