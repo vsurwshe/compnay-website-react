@@ -39,6 +39,19 @@ const GetCommentListById=(id)=>{
     }
 }
 
+const GetCategoryBlogList=()=>{
+    return(dispatch)=>{
+        return CreateInstance()
+            .get('/blog/blogs.php/categoery',{
+                headers:{
+                    "Content-Type":"application/json"
+                }
+            })
+            .then(response => dispatch(saveCategoryBlogList(response.data)) )
+            .catch(error => console.log("Error ", error))
+    }
+}
+
 const CreateBlog=(blogData)=>{
     return(dispatch)=>{
         return CreateInstance()
@@ -107,6 +120,13 @@ export function saveCommentList(commentList){
     }
 }
 
+export function saveCategoryBlogList(blogList){
+    return{
+        type:"SAVE_CATEGORY_BLOG_LIST",
+        blogList
+    }
+}
+
 export function saveCommentListById(commentList){
     return{
         type:"SAVE_COMMENT_LIST_BY_ID",
@@ -149,5 +169,6 @@ export{
     UpdateBlogRecord,
     DeleteBlogRecord,
     CreateComment,
-    GetCommentListById
+    GetCommentListById,
+    GetCategoryBlogList
 }

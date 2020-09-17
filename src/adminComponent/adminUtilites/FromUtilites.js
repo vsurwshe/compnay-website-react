@@ -37,20 +37,33 @@ const renderTextFiled=({ type, placeholder, infoText, name,  input, label, mainL
   </Form.Group>
 }
 
-const renderTextFiledCol=({ type, placeholder, infoText, name, rows, input, label, mainLableName, ...rest })=>(
+const renderTextFiledCol=({ type, placeholder, infoText, name, rows, input,meta: { touched, invalid, error }, label, mainLableName, ...rest })=>(
     <Form.Group as={Row} controlId={name}>
     <Form.Label column sm={2}> {label}: </Form.Label>
     <Col sm={10}>
-      <Form.Control type={type} placeholder={placeholder} rows={rows} {...input} {...rest} />
+      <Form.Control
+      aria-describedby="inputGroupPrepend" 
+      type={type} 
+      placeholder={placeholder} 
+      rows={rows}
+      isValid={touched && !error.name} 
+      {...input} 
+      {...rest} />
     </Col>
   </Form.Group>
 )
 
-const renderTextAreaCol=({ type, placeholder, infoText, name, rows, input, label, mainLableName, ...rest })=>(
+const renderTextAreaCol=({ type, placeholder, infoText, name, rows, input, label,meta: { touched, invalid, error }, mainLableName, ...rest })=>(
     <Form.Group as={Row} controlId={name}>
     <Form.Label column sm={2}> {label}: </Form.Label>
     <Col sm={10}>
-        <Form.Control as="textarea" rows={rows} placeholder={placeholder} {...input} {...rest} />
+        <Form.Control 
+          as="textarea" 
+          rows={rows} 
+          isValid={touched && !error.name}
+          placeholder={placeholder} 
+          {...input} {...rest} 
+        />
     </Col>
   </Form.Group>
 )

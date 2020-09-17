@@ -7,11 +7,10 @@ import { API_EXE_TIME } from '../../config/APIConfig';
 import * as BlogAction from '../../redux/actions/BlogAction'
 
 let CommentFrom=(props)=>{
-    const { handleSubmit, reset, blogData }=props
+    const { handleSubmit }=props
     return <div className="comment-top mt-5">
     <h4>Leave a Comment</h4>
     <hr />
-    <h3 id="commentResult"></h3>
     <div className="comment-bottom">
         <form onSubmit={handleSubmit((values)=> CallSaveComment({ data:values, "mainProps":props}))}>
             <Field name="name" component={renderInputFiled} type="text" placeholder="enter your name" />

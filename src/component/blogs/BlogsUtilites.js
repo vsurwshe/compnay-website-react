@@ -1,4 +1,5 @@
 import React from 'react';
+import { Accordion, Button, Card } from 'react-bootstrap';
 
 const LoadSerachBlog=()=>{
     return   <div className="search1">
@@ -11,21 +12,42 @@ const LoadSerachBlog=()=>{
 }
 
 const LoadBlogList=(props)=>{
-    const { blogs, changeBlog }=props
+    const { changeBlog, blogListCategoy }=props
     return  <div className="category-story tech-btm">
         <h3 className="blog-title text-dark mb-3">More Blogs</h3>
-        <ul className="list-unstyled">
-            {(blogs && blogs.length >0) && blogs.map((item,key)=>LoadSingleBlog(item,key,changeBlog))}
-        </ul>
+        <Accordion>
+            {(blogListCategoy && blogListCategoy.length >0) && blogListCategoy.map((item,key)=>LoadSingleCardHeader(item, (key+1), changeBlog)) }
+        </Accordion>
     </div>
+}
+
+
+
+const LoadSingleCardHeader=(data, key, changeBlog)=>{
+    return <Card>
+    <Card.Header>
+      <Accordion.Toggle as={Button} variant="link" eventKey={key}> {data.category.toUpperCase()} </Accordion.Toggle>
+    </Card.Header>
+    <Accordion.Collapse eventKey={key}>
+      <Card.Body>
+        <ul className="list-unstyled">
+            {(data && data.blogsList && data.blogsList.length >0) && data.blogsList.map((item,key)=>LoadSingleBlog(item,key,changeBlog))}
+        </ul>
+      </Card.Body>
+    </Accordion.Collapse>
+  </Card>
 }
 
 const LoadSingleBlog=(item,key,changeBlog)=>{
     return <li key={key} className="border-bottom mb-3 pb-3">
-    <i className="fa fa-caret-right mr-2" onClick={()=>changeBlog(item)}>
-        &nbsp;&nbsp;<span className="text-danger txt1">{item.blogName}</span>
+        <i className="fa fa-caret-right mr-2" onClick={()=>changeBlog(item)}>
+        &nbsp;&nbsp;<span className="text-danger txt1">{CapitalFirstLetter(item.blogName)}</span>
     </i>
 </li>
+}
+
+const CapitalFirstLetter=(string)=>{
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 const LoadComments=(props)=>{

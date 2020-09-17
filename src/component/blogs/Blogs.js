@@ -29,11 +29,11 @@ class Blogs extends Component {
     }
 
     componentDidMount=async()=>{
-        const { blogList }=this.props.BlogState
-        const { GetBlogList }=this.props.BlogAction
+        const { blogList,blogListCategoy }=this.props.BlogState
+        const { GetBlogList, GetCategoryBlogList }=this.props.BlogAction
         await this.handleBlogListValue();
         (blogList && blogList.length <=0) && await GetBlogList();
-        // (commentList && commentList.length <=0) && await GetCommentList();
+        (blogListCategoy && blogListCategoy.length <=0) && await GetCategoryBlogList();
         await this.loadBlogAndComment();
         await this.handleBlogListValue();
     }
@@ -65,7 +65,7 @@ class Blogs extends Component {
     // this will load the left sections
     loadLeftSection=()=>{
         const { selectedBlogData }=this.state
-        const { commentList, blogList }=this.props.BlogState
+        const { commentList }=this.props.BlogState
         return <div className="col-lg-8 left-blog-info text-left">
                {this.loadBlogBody()}
                <LoadComments comments={commentList} />
@@ -88,12 +88,13 @@ class Blogs extends Component {
 
     // this will load the right section
     loadRightSection=()=>{
-        const { blogList }=this.props.BlogState
+        const { blogList, blogListCategoy }=this.props.BlogState
         return <div className="col-lg-4 event-right mt-lg-0 mt-sm-5 mt-4">
             <div className="event-right1">
                 <LoadBlogList 
                     blogs={blogList}
                     changeBlog={this.handleSelectedBlogData}
+                    blogListCategoy={blogListCategoy}
                 />
                 <LoadSerachBlog />
             </div>

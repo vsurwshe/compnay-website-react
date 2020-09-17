@@ -6,7 +6,7 @@ import { FromActions } from '../config/Config';
 
 const BlogTable=(props)=>{
     const { blogList }=props.BlogState
-    const { fromAction, deleteMethod }=props
+    const { fromAction }=props
 
     // creating columns
     const columns = [

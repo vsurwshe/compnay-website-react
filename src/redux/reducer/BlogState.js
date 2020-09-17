@@ -1,5 +1,6 @@
 const initialState={
     blogList:[],
+    blogListCategoy:[],
     blogData:[],
     commentList:[],
     commentData:[]
@@ -9,6 +10,8 @@ const BlogState=(state=initialState,action)=>{
     switch (action && action.type) {
         case "SAVE_BLOG_LIST":
             return {...state, blogList: action.blogList}
+        case "SAVE_CATEGORY_BLOG_LIST":
+            return {...state, blogListCategoy: action.blogList}
         case "SAVE_BLOG_RECORD":
             return {...state, blogData: action.blogRecord}
         case "SAVE_BLOG_UPDATE_RECORD":

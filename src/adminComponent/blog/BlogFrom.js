@@ -11,7 +11,7 @@ import { FromActions } from '../config/Config';
 
 
 let BlogFrom=(props)=>{
-    const { handleSubmit, reset, fromAction, operation, initialValues }=props
+    const { handleSubmit, reset, fromAction, operation }=props
     const [loading, setLoading] = useState(false);
 
     return <div style={{padding:"20px"}}>
@@ -70,6 +70,27 @@ const CallSaveBlogAPI=async(props)=>{
     }, API_EXE_TIME)
 }
 
+const validate = (values) => {
+    const errors = {}
+    // this condition checks employee number is provide or not
+    if (!values.blogName) {
+        errors.blogName = 'Blog name is Required'
+    }
+    // this condition checks employee number is provide or not
+    if (!values.blogWriter) {
+        errors.blogWriter = 'Blog writer is Required'
+    }
+    // this condition checks employee number is provide or not
+    if (!values.blogCategory) {
+        errors.blogCategory = 'Blog category is Required'
+    }
+    // this condition checks employee number is provide or not
+    if (!values.blogBody) {
+        errors.blogBody = 'Blog body is Required'
+    }
+    return errors
+}
+
 const mapToPropsState=(state)=>{return state}
 const mapDispatchToProps = (dispatch) => ({
     BlogAction: bindActionCreators(BlogAction, dispatch),
@@ -77,4 +98,4 @@ const mapDispatchToProps = (dispatch) => ({
 BlogFrom= connect(mapToPropsState,mapDispatchToProps)(BlogFrom)
 
 const afterSubmit = (result, dispatch) => dispatch(reset('BlogFrom'));
-export default reduxForm({ form: 'BlogFrom', onSubmitSuccess: afterSubmit })(BlogFrom);
+export default reduxForm({ form: 'BlogFrom', validate, onSubmitSuccess: afterSubmit })(BlogFrom);
