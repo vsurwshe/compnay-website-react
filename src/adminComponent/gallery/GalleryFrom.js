@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Field, reduxForm, reset } from 'redux-form';
+import { Field, reduxForm, reset, getFormSubmitErrors, getFormSyncErrors, hasSubmitFailed } from 'redux-form';
 import Loading from '../../component/utilities/loader/Loader';
 import { API_EXE_TIME } from '../../config/APIConfig';
 import * as GalleryAction from '../../redux/actions/GalleryAction'
@@ -10,10 +10,11 @@ import { renderFile, renderTextFiledCol } from '../adminUtilites/FromUtilites';
 import { FromActions } from '../config/Config';
 
 let GalleryFrom=(props)=>{
-    const { handleSubmit, reset, fromAction, operation, initialValues }=props
+    const { handleSubmit, reset, fromAction, operation, initialValues, GalleryFromErrors, GalleryFromSubmitFailed }=props
     const [loading, setLoading] = useState(false);
     const [imageData, setImageData] = useState("");
     const [mine, setMine] = useState("")
+    
     return <div style={{padding:"20px"}}>
         <left>
             {(operation === FromActions.CR)&&<><h2>Add Image</h2> &nbsp;&nbsp;</>}
@@ -22,6 +23,7 @@ let GalleryFrom=(props)=>{
         </left>
         <hr />
         <Form onSubmit={handleSubmit((values)=> CallSaveGallery({data: values, setLoading, imageData, mine, "mainProps":props}))}>
+            {GalleryFromSubmitFailed && <ShowError GalleryFromErrors={GalleryFromErrors}  />}
             <LoadFrom 
                 setImageData={setImageData}
                 setMine={setMine}
@@ -41,6 +43,17 @@ let GalleryFrom=(props)=>{
             </Form.Group>
         </Form>
     </div>
+}
+
+const ShowError=(props)=>{
+    const { GalleryFromErrors }=props
+    return  <ul className="list-unstyled">
+        <li className="mb-3 pb-3"> 
+            {GalleryFromErrors.clientName && <><i className="fa fa-caret-right mr-2" />&nbsp;<span className="text-danger txt1">{GalleryFromErrors.clientName}</span> <br/></>}
+            {GalleryFromErrors.clientCompany && <><i className="fa fa-caret-right mr-2" />&nbsp;<span className="text-danger txt1">{GalleryFromErrors.clientCompany}</span><br/></>}
+            {GalleryFromErrors.galleryImage && <><i className="fa fa-caret-right mr-2" />&nbsp;<span className="text-danger txt1">{GalleryFromErrors.galleryImage}</span><br/></>}
+        </li>
+    </ul>
 }
 
 const LoadFrom=(props)=>{
@@ -78,15 +91,39 @@ const CallSaveGallery=async(props)=>{
     },API_EXE_TIME)
 }
 
-const mapStateToProps=(state)=>{return state;}
+const validate = (values) => {
+    const errors = {}
+    // this condition checks employee number is provide or not
+    if (!values.clientName) {
+        errors.clientName = 'Event name is required'
+    }
+    // this condition checks employee number is provide or not
+    if (!values.clientCompany) {
+        errors.clientCompany = 'Client company name is required'
+    }
+    // this condition checks employee number is provide or not
+    if (!values.galleryImage) {
+        errors.galleryImage = 'Gallery image is required'
+    }
+    return errors
+}
+
+const mapStateToProps=(state)=>{
+    let galleryFromErrors=getFormSubmitErrors('GalleryFrom')(state);
+    return {...state, galleryFromErrors};
+}
 const mapDispatchToProps=(dispatch)=>({
     GalleryAction: bindActionCreators(GalleryAction, dispatch)
 })
 
-GalleryFrom= connect(mapStateToProps,mapDispatchToProps)(GalleryFrom);
+GalleryFrom= connect(state=>({
+    GalleryFromErrors: getFormSyncErrors('GalleryFrom')(state),
+    GalleryFromSubmitFailed: hasSubmitFailed('GalleryFrom')(state)
+}),mapDispatchToProps)(GalleryFrom);
 const afterSubmit = (result, dispatch) => dispatch(reset('GalleryFrom'));
 export default reduxForm({ 
-    form: 'GalleryFrom', 
+    form: 'GalleryFrom',
+    validate, 
     onSubmitSuccess: afterSubmit,
     enableReinitialize: true 
 })(GalleryFrom);

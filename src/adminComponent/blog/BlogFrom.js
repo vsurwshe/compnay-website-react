@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { reset, reduxForm, Field} from 'redux-form';
+import { reset, reduxForm, Field, getFormSubmitErrors, hasSubmitFailed, getFormError, getFormSyncErrors} from 'redux-form';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { renderTextAreaCol, renderTextFiledCol } from '../adminUtilites/FromUtilites';
 import Loading from '../../component/utilities/loader/Loader';
@@ -11,13 +11,13 @@ import { FromActions } from '../config/Config';
 
 
 let BlogFrom=(props)=>{
-    const { handleSubmit, reset, fromAction, operation }=props
+    const { handleSubmit, reset, fromAction, operation, BlogFromErrors, BlogFromSubmitFailed}=props
     const [loading, setLoading] = useState(false);
-
     return <div style={{padding:"20px"}}>
         <left><h2>Create Blog</h2></left>
         <hr />
         <Form onSubmit={handleSubmit((values)=> CallSaveBlogAPI({data: values, setLoading, "mainProps":props}))}>
+            {BlogFromSubmitFailed && <ShowError BlogFromErrors={BlogFromErrors}  />}
             <LoadFrom />
             <Form.Group as={Row}>
               <Col sm={{ span: 10, offset: 2 }}>
@@ -33,6 +33,18 @@ let BlogFrom=(props)=>{
             </Form.Group>
         </Form>
     </div>
+}
+
+const ShowError=(props)=>{
+    const { BlogFromErrors }=props
+    return  <ul className="list-unstyled">
+        <li className="mb-3 pb-3"> 
+            {BlogFromErrors.blogName && <><i className="fa fa-caret-right mr-2" />&nbsp;<span className="text-danger txt1">{BlogFromErrors.blogName}</span> <br/></>}
+            {BlogFromErrors.blogWriter && <><i className="fa fa-caret-right mr-2" />&nbsp;<span className="text-danger txt1">{BlogFromErrors.blogWriter}</span><br/></>}
+            {BlogFromErrors.blogCategory && <><i className="fa fa-caret-right mr-2" />&nbsp;<span className="text-danger txt1">{BlogFromErrors.blogCategory}</span><br/></>}
+            {BlogFromErrors.blogBody && <><i className="fa fa-caret-right mr-2" />&nbsp;<span className="text-danger txt1">{BlogFromErrors.blogBody}</span></>}
+        </li>
+    </ul>
 }
 
 const LoadFrom=()=>{
@@ -74,28 +86,34 @@ const validate = (values) => {
     const errors = {}
     // this condition checks employee number is provide or not
     if (!values.blogName) {
-        errors.blogName = 'Blog name is Required'
+        errors.blogName = 'Blog title is required'
     }
     // this condition checks employee number is provide or not
     if (!values.blogWriter) {
-        errors.blogWriter = 'Blog writer is Required'
+        errors.blogWriter = 'Blog writer is required'
     }
     // this condition checks employee number is provide or not
     if (!values.blogCategory) {
-        errors.blogCategory = 'Blog category is Required'
+        errors.blogCategory = 'Blog category is required'
     }
     // this condition checks employee number is provide or not
     if (!values.blogBody) {
-        errors.blogBody = 'Blog body is Required'
+        errors.blogBody = 'Blog content is required'
     }
     return errors
 }
 
-const mapToPropsState=(state)=>{return state}
+const mapToPropsState=(state)=>{
+    let blogFormErrors=getFormSubmitErrors('BlogFrom')(state);
+    return {...state, blogFormErrors}
+}
 const mapDispatchToProps = (dispatch) => ({
     BlogAction: bindActionCreators(BlogAction, dispatch),
 })
-BlogFrom= connect(mapToPropsState,mapDispatchToProps)(BlogFrom)
+BlogFrom= connect(state=>({
+    BlogFromErrors: getFormSyncErrors('BlogFrom')(state),
+    BlogFromSubmitFailed: hasSubmitFailed('BlogFrom')(state)
+}),mapDispatchToProps)(BlogFrom)
 
 const afterSubmit = (result, dispatch) => dispatch(reset('BlogFrom'));
 export default reduxForm({ form: 'BlogFrom', validate, onSubmitSuccess: afterSubmit })(BlogFrom);

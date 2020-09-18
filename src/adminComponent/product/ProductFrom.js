@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { reset, reduxForm, Field} from 'redux-form';
+import { reset, reduxForm, Field, getFormSyncErrors, hasSubmitFailed} from 'redux-form';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -11,7 +11,7 @@ import { FromActions } from '../config/Config';
 
 
 let ProductFrom=(props)=>{
-    const { handleSubmit, reset, fromAction, operation, initialValues }=props
+    const { handleSubmit, reset, fromAction, operation, initialValues, ProductFromErrors, ProductFromSubmitFailed }=props
     const [loading, setLoading] = useState(false);
     const [imageData, setImageData] = useState("");
     return <div style={{padding:"20px"}}>
@@ -22,6 +22,7 @@ let ProductFrom=(props)=>{
         </left>
         <hr />
         <Form onSubmit={handleSubmit((values)=> CallSaveProduct({data: values, setLoading, imageData,"mainProps":props}))}>
+            {ProductFromSubmitFailed && <ShowError ProductFromErrors={ProductFromErrors}  />}
             <LoadFrom 
                 setImageData={setImageData}
                 operation={operation}
@@ -41,6 +42,19 @@ let ProductFrom=(props)=>{
             </Form.Group>
         </Form>
     </div>
+}
+
+const ShowError=(props)=>{
+    const { ProductFromErrors }=props
+    return  <ul className="list-unstyled">
+        <li className="mb-3 pb-3"> 
+            {ProductFromErrors.productName && <><i className="fa fa-caret-right mr-2" />&nbsp;<span className="text-danger txt1">{ProductFromErrors.productName}</span> <br/></>}
+            {ProductFromErrors.clientName && <><i className="fa fa-caret-right mr-2" />&nbsp;<span className="text-danger txt1">{ProductFromErrors.clientName}</span><br/></>}
+            {ProductFromErrors.companyName && <><i className="fa fa-caret-right mr-2" />&nbsp;<span className="text-danger txt1">{ProductFromErrors.companyName}</span><br/></>}
+            {ProductFromErrors.productImage && <><i className="fa fa-caret-right mr-2" />&nbsp;<span className="text-danger txt1">{ProductFromErrors.productImage}</span><br/></>}
+            {ProductFromErrors.productDiscription && <><i className="fa fa-caret-right mr-2" />&nbsp;<span className="text-danger txt1">{ProductFromErrors.productDiscription}</span><br/></>}
+        </li>
+    </ul>
 }
 
 const LoadFrom=(props)=>{
@@ -86,15 +100,44 @@ const CallSaveProduct=async(props)=>{
     },API_EXE_TIME)
 }
 
+const validate = (values) => {
+    const errors = {}
+    // this condition checks employee number is provide or not
+    if (!values.productName) {
+        errors.productName = 'Product name is required'
+    }
+    // this condition checks employee number is provide or not
+    if (!values.clientName) {
+        errors.clientName = 'Client name is required'
+    }
+    // this condition checks employee number is provide or not
+    if (!values.companyName) {
+        errors.companyName = 'Company name is required'
+    }
+    // this condition checks employee number is provide or not
+    if (!values.productImage) {
+        errors.productImage = 'Product Image is required'
+    }
+    // this condition checks employee number is provide or not
+    if (!values.productDiscription) {
+        errors.productDiscription = 'Product discription is required'
+    }
+    return errors
+}
+
 const mapStateToProps=(state)=>{return state};
 const mapDispatchToProps=(dispatch)=>({
     ProductAction: bindActionCreators(ProductAction, dispatch)
 })
-ProductFrom= connect(mapStateToProps,mapDispatchToProps)(ProductFrom);
+ProductFrom= connect(state=>({
+    ProductFromErrors: getFormSyncErrors('ProductFrom')(state),
+    ProductFromSubmitFailed: hasSubmitFailed('ProductFrom')(state)
+}),mapDispatchToProps)(ProductFrom);
 
 const afterSubmit = (result, dispatch) => dispatch(reset('ProductFrom'));
 export default reduxForm({ 
-    form: 'ProductFrom', 
+    form: 'ProductFrom',
+    validate, 
     onSubmitSuccess: afterSubmit,  
     enableReinitialize: true
 })(ProductFrom);

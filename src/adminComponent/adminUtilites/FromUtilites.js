@@ -2,7 +2,7 @@ import React from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
 
 
-const renderInputFiled=({type, placeholder, infoText, name,  input, label, mainLableName, ...rest })=>(
+const renderInputFiled=({type, placeholder, infoText, name,  input, label,meta: { touched, invalid, error }, mainLableName, ...rest })=>(
 <div className="form-group">
       <input 
       className="form-control" 
@@ -10,29 +10,37 @@ const renderInputFiled=({type, placeholder, infoText, name,  input, label, mainL
       name={name} 
       id={name} 
       placeholder={placeholder}  
+      isValid={(touched && error) && !error.name} 
       {...input}
       {...rest}
       />
 </div>
 )
 
-const renderInputTextArea=({placeholder, name,  input, ...rest})=>(
+const renderInputTextArea=({placeholder, name, meta: { touched, invalid, error }, input, ...rest})=>(
   <div className="form-group">
     <textarea 
       className="form-control" 
       name={name} 
       id={name}
       placeholder={placeholder}
+      isValid={(touched && error) && !error.name} 
       {...input}
       {...rest}
     ></textarea>
   </div>
 )
 
-const renderTextFiled=({ type, placeholder, infoText, name,  input, label, mainLableName, ...rest })=>{
+const renderTextFiled=({ type, placeholder, infoText, name,  input, label,meta: { touched, invalid, error }, mainLableName, ...rest })=>{
     return <Form.Group controlId={name}>
     <Form.Label>{label}</Form.Label>
-    <Form.Control type={type} placeholder={placeholder} {...input} {...rest} />
+      <Form.Control 
+        type={type} 
+        placeholder={placeholder} 
+        isValid={(touched && error) && !error.name} 
+        {...input} 
+        {...rest} 
+      />
     <Form.Text className="text-muted">{infoText}</Form.Text>
   </Form.Group>
 }
@@ -46,7 +54,7 @@ const renderTextFiledCol=({ type, placeholder, infoText, name, rows, input,meta:
       type={type} 
       placeholder={placeholder} 
       rows={rows}
-      isValid={touched && !error.name} 
+      isValid={(touched && error) && !error.name} 
       {...input} 
       {...rest} />
     </Col>
@@ -60,7 +68,7 @@ const renderTextAreaCol=({ type, placeholder, infoText, name, rows, input, label
         <Form.Control 
           as="textarea" 
           rows={rows} 
-          isValid={touched && !error.name}
+          isValid={(touched && error) && !error.name}
           placeholder={placeholder} 
           {...input} {...rest} 
         />
@@ -68,12 +76,17 @@ const renderTextAreaCol=({ type, placeholder, infoText, name, rows, input, label
   </Form.Group>
 )
 
-const renderFile=({ type,placeholder, onChangeFunction, setMine, infoText, name, rows, input, label, mainLableName, ...rest })=>(
+const renderFile=({ type,placeholder, onChangeFunction, setMine, infoText, name, rows, input, label,meta: { touched, invalid, error }, mainLableName, ...rest })=>(
   <Form.Group as={Row} controlId={name}>
     <Form.Label column sm={2}> {label}: </Form.Label>
     <Col sm={10}>
-    <input id={input.name} name={input.name} type={type} onChange={event =>handleChange(event, input, onChangeFunction,setMine)} />
-      {/* <Form.File id={name} {...input} {...rest} onChange={event =>handleChange(event, input, onChangeFunction)} /> */}
+    <input 
+      id={input.name} 
+      name={input.name} 
+      type={type} 
+      isValid={(touched && error) && !error.name}
+      onChange={event =>handleChange(event, input, onChangeFunction,setMine)} 
+      />
     </Col>
   </Form.Group>
 )
