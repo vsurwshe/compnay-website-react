@@ -1,5 +1,6 @@
 const initialState={
     blogsCount:[],
+    commentSerise:[],
     commentCount:[]
 }
 
@@ -11,7 +12,9 @@ const DashboardState=(state=initialState,action)=>{
             })
             return {...state, blogsCount: tempBlogCount}
         case "SAVE_COMMENT_COUNT":
-            return {...state, commentCount: action.commentCount}
+            let tempCommentSerise = (action.commentCount && action.commentCount.length >0) && action.commentCount[0].blogId
+            let tempCommentData = (action.commentCount && action.commentCount.length >0) && action.commentCount[0].blogCommentData.map((item,key)=>{ return {...item, "month": months[item.month]} })
+            return {...state,commentSerise:tempCommentSerise, commentCount: tempCommentData}
         default:
             return state;
     }

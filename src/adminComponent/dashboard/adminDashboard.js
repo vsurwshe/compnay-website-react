@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as DashboardAction from '../../redux/actions/DashboardAction'
 import Loading from '../../component/utilities/loader/Loader'
-import { LineChart } from './ChartUtilites';
+import { LineChart, StackedBarChart } from './ChartUtilites';
 class AdminDashboard extends Component {
     state = { 
         loadDashboard: false,
@@ -31,6 +31,7 @@ class AdminDashboard extends Component {
     loadCharts=()=>{
         return <>
             {this.loadBlogCountLineChart()}
+            {this.loadCommentCountStackedChart()}
         </>
     }
 
@@ -41,6 +42,17 @@ class AdminDashboard extends Component {
             title="Blogs Count"
             argumentField="month"
             valueField="count"
+            xAxisText="Blogs Count"
+        />
+    }
+
+    loadCommentCountStackedChart=()=>{
+        const { commentCount, commentSerise }=this.props.DashboardState
+        return <StackedBarChart
+            chartData={commentCount}
+            architectureSources={commentSerise}
+            title="Comment Count By Blogs"
+            xAxisText="Comment Count"
         />
     }
 }
