@@ -115,10 +115,6 @@ const validate = (values) => {
         errors.companyName = 'Company name is required'
     }
     // this condition checks employee number is provide or not
-    if (!values.productImage) {
-        errors.productImage = 'Product Image is required'
-    }
-    // this condition checks employee number is provide or not
     if (!values.productDiscription) {
         errors.productDiscription = 'Product discription is required'
     }

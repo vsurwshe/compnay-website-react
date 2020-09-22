@@ -7,6 +7,7 @@ import UserState from '../redux/reducer/UserState';
 import BlogState from '../redux/reducer/BlogState';
 import GalleryState from '../redux/reducer/GalleryState';
 import ProductState from '../redux/reducer/ProductState';
+import DashboardState from '../redux/reducer/DashboardState';
 
 // this function save state into local storage.
 const saveToLocalStorage=(state)=>{
@@ -44,14 +45,15 @@ const saveToLocalStorage=(state)=>{
     UserState,
     BlogState,
     GalleryState,
-    ProductState
+    ProductState,
+    DashboardState
   });
   
   // this functions apply logger funtionality during development mode 
   const enhancer= compose(applyMiddleware(thunk, logger));
   
   // this is common action through out application will be used
-  const initialState = reducer({},{},{},{},{})
+  const initialState = reducer({},{},{},{},{},{})
   const rootReducer = (state, action) => {
     console.log("Called Root Reducer")
     if (action.type === 'CLEAR_DATA') {
