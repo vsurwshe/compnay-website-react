@@ -2,11 +2,10 @@ import React from 'react';
 import { Accordion, Button, Card } from 'react-bootstrap';
 
 const LoadSerachBlog=()=>{
-    return   <div className="search1">
-    <h3 className="blog-title text-dark mb-3">Search</h3>
+    return   <div className="search1" style={{paddingBottom:30}}>
     <form className="form-inline" action="#" method="post">
-        <input className="form-control rounded-0 mr-sm-2" type="search" placeholder="Search Here" aria-label="Search" required />
-        <button className="btn bg-dark text-white rounded-0 mt-3" type="submit">Search</button>
+        <input className="form-control rounded-0 mr-sm-2" type="search" placeholder="Enter Blog title..." aria-label="Search" required />
+        <button className="btn bg-dark text-white rounded-30 mr-sm-2" type="submit">Search Blog</button>
     </form>
 </div>
 }
@@ -14,8 +13,8 @@ const LoadSerachBlog=()=>{
 const LoadBlogList=(props)=>{
     const { changeBlog, blogListCategoy }=props
     return  <div className="category-story tech-btm">
-        <h3 className="blog-title text-dark mb-3">More Blogs</h3>
-        <Accordion>
+        <h3 className="blog-title text-dark mb-3">Blog List by Category</h3>
+        <Accordion defaultActiveKey={1}>
             {(blogListCategoy && blogListCategoy.length >0) && blogListCategoy.map((item,key)=>LoadSingleCardHeader(item, (key+1), changeBlog)) }
         </Accordion>
     </div>
@@ -24,6 +23,7 @@ const LoadBlogList=(props)=>{
 
 
 const LoadSingleCardHeader=(data, key, changeBlog)=>{
+    console.log("Key ",key)
     return <Card>
     <Card.Header>
       <Accordion.Toggle as={Button} variant="link" eventKey={key}> {data.category.toUpperCase()} </Accordion.Toggle>
@@ -39,7 +39,7 @@ const LoadSingleCardHeader=(data, key, changeBlog)=>{
 }
 
 const LoadSingleBlog=(item,key,changeBlog)=>{
-    return <li key={key} className="border-bottom mb-3 pb-3">
+    return <li key={key} className="mb-3 pb-3">
         <i className="fa fa-caret-right mr-2" onClick={()=>changeBlog(item)}>
         &nbsp;&nbsp;<span className="text-danger txt1">{CapitalFirstLetter(item.blogName)}</span>
     </i>

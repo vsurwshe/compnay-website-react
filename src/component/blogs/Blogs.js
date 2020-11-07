@@ -6,8 +6,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Loading from '../utilities/loader/Loader'
 
-
-
 class Blogs extends Component {
     state = { 
         loadBlogListValue: false,
@@ -91,12 +89,13 @@ class Blogs extends Component {
         const { blogList, blogListCategoy }=this.props.BlogState
         return <div className="col-lg-4 event-right mt-lg-0 mt-sm-5 mt-4">
             <div className="event-right1">
+                <LoadSerachBlog />
                 <LoadBlogList 
                     blogs={blogList}
                     changeBlog={this.handleSelectedBlogData}
                     blogListCategoy={blogListCategoy}
                 />
-                <LoadSerachBlog />
+               
             </div>
         </div>
     }
