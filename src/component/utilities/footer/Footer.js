@@ -43,7 +43,7 @@ const FooterSocailLinks=(props)=>{
 
 const FooterCopyRightText=(props)=>{
     return <p className="copy-right-grids mt-lg-1">© 2018 V & Y. All Rights Reserved | Design by
-    <a href="/" target="_blank">W3layouts</a>
+    <a href="/" target="_blank">&nbsp;V & Y Soft. Tech. Pvt. Ltd.</a>
 </p>
 }
 
