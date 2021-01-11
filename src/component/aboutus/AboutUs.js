@@ -28,7 +28,7 @@ class AboutUs extends Component {
 		    <div className="container py-xl-5 py-lg-3">
 		    	<div className="row">
 		    		<div className="col-lg-6 about-img">
-		    			<img className="img-fluid" src="images/main.jpg" alt="" />
+		    			<img className="img-fluid" src={`${process.env.PUBLIC_URL}/images/main.jpg`} alt="" />
 		    		</div>
 		    		<div className="col-lg-6 about-right mt-xl-5 mt-lg-3 mt-sm-5 mt-4 pt-lg-2">
 		    			<h2 className="sub-tittle text-uppercase font-weight-bold">About Us</h2>

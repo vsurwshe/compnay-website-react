@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { reset, reduxForm, Field, getFormSubmitErrors, hasSubmitFailed, getFormError, getFormSyncErrors} from 'redux-form';
+import { reset, reduxForm, Field, hasSubmitFailed, getFormSyncErrors} from 'redux-form';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { renderTextAreaCol, renderTextFiledCol } from '../adminUtilites/FromUtilites';
 import Loading from '../../component/utilities/loader/Loader';
@@ -101,11 +101,6 @@ const validate = (values) => {
         errors.blogBody = 'Blog content is required'
     }
     return errors
-}
-
-const mapToPropsState=(state)=>{
-    let blogFormErrors=getFormSubmitErrors('BlogFrom')(state);
-    return {...state, blogFormErrors}
 }
 const mapDispatchToProps = (dispatch) => ({
     BlogAction: bindActionCreators(BlogAction, dispatch),

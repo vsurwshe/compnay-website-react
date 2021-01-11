@@ -121,7 +121,6 @@ const validate = (values) => {
     return errors
 }
 
-const mapStateToProps=(state)=>{return state};
 const mapDispatchToProps=(dispatch)=>({
     ProductAction: bindActionCreators(ProductAction, dispatch)
 })

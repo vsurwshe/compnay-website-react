@@ -2,7 +2,7 @@
   "name": "vany-company-website",
   "version": "0.1.0",
   "private": "true",
-  "homepage": ".",
+  "homepage": "app",
   "dependencies": {
     "@devexpress/dx-react-chart": "^2.7.1",
     "@devexpress/dx-react-core": "^2.7.1",

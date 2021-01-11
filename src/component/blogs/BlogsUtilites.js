@@ -63,7 +63,7 @@ const LoadComments=(props)=>{
 
 const LoadSingleComment=(item,key)=>{
     return <div style={{padding:10}} className="media">
-     <div> <img src="images/user.png" style={{marginTop:10}} />  </div>
+     <div> <img src={`${process.env.PUBLIC_URL}/images/user.png`} alt="user" style={{marginTop:10}} />  </div>
      <div style={{marginLeft:10}}>
        <h5 style={{marginBottom:8}}>{item.commentName}</h5>
        {item.commentMessage}

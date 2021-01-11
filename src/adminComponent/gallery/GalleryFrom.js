@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Field, reduxForm, reset, getFormSubmitErrors, getFormSyncErrors, hasSubmitFailed } from 'redux-form';
+import { Field, reduxForm, reset, getFormSyncErrors, hasSubmitFailed } from 'redux-form';
 import Loading from '../../component/utilities/loader/Loader';
 import { API_EXE_TIME } from '../../config/APIConfig';
 import * as GalleryAction from '../../redux/actions/GalleryAction'
@@ -104,10 +104,6 @@ const validate = (values) => {
     return errors
 }
 
-const mapStateToProps=(state)=>{
-    let galleryFromErrors=getFormSubmitErrors('GalleryFrom')(state);
-    return {...state, galleryFromErrors};
-}
 const mapDispatchToProps=(dispatch)=>({
     GalleryAction: bindActionCreators(GalleryAction, dispatch)
 })

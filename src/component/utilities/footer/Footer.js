@@ -35,7 +35,7 @@ const FooterMenu=(props)=>{
 
 const FooterSocailLinks=(props)=>{
     return <ul>
-    <li className="px-2"><a href="https://www.facebook.com/VY-365604737344237" target="_blank" className="rounded-circle"> <i className="fa fa-facebook-f"></i> </a> </li>
+    <li className="px-2"><a href="https://www.facebook.com/VY-365604737344237" target="_blank" rel="noopener noreferrer" className="rounded-circle"> <i className="fa fa-facebook-f"></i> </a> </li>
     <li className="px-2"><a href="/" className="rounded-circle"> <i className="fa fa-google-plus"></i> </a>     </li>
     <li className="px-2"><a href="/" className="rounded-circle"> <i className="fa fa-twitter"></i> </a> </li>
 </ul>
