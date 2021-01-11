@@ -1,15 +1,16 @@
 import React,{useState} from 'react';
 import { reset, reduxForm, Field, hasSubmitFailed, getFormSyncErrors} from 'redux-form';
 import { Button, Col, Form, Row } from 'react-bootstrap';
-import { renderTextAreaCol, renderTextFiledCol } from '../adminUtilites/FromUtilites';
+import { renderHtmlEditor, renderTextFiledCol } from '../adminUtilites/FromUtilites';
 import Loading from '../../component/utilities/loader/Loader';
 import * as BlogAction from '../../redux/actions/BlogAction';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { API_EXE_TIME } from '../../config/APIConfig';
 import { FromActions } from '../config/Config';
+import { markup } from './DemoBlog';
 
-
+// this is main compoent
 let BlogFrom=(props)=>{
     const { handleSubmit, reset, fromAction, operation, BlogFromErrors, BlogFromSubmitFailed}=props
     const [loading, setLoading] = useState(false);
@@ -35,6 +36,7 @@ let BlogFrom=(props)=>{
     </div>
 }
 
+// this method will show the error
 const ShowError=(props)=>{
     const { BlogFromErrors }=props
     return  <ul className="list-unstyled">
@@ -47,15 +49,17 @@ const ShowError=(props)=>{
     </ul>
 }
 
+// this method will load fileds
 const LoadFrom=()=>{
     return <>
         <Field name="blogName" component={renderTextFiledCol} type="text" label="Title" placeholder="enter blog title" />
         <Field name="blogWriter" component={renderTextFiledCol} type="text" label="Writer" placeholder="enter blog writer name"/>
         <Field name="blogCategory" component={renderTextFiledCol} type="text" label="Category" placeholder="enter blog category" />
-        <Field name="blogBody" component={renderTextAreaCol} type="textarea" rows="5" label="Content" placeholder="enter blog content" />
+        <Field name="blogBody" component={renderHtmlEditor} type="" label="Body Content" placeholder="enter blog content" value={markup} />
     </>
 }
 
+// this method will used for calling api
 const CallSaveBlogAPI=async(props)=>{
     const { data, setLoading }=props
     const { fromAction, operation, initialValues }=props.mainProps
@@ -82,6 +86,7 @@ const CallSaveBlogAPI=async(props)=>{
     }, API_EXE_TIME)
 }
 
+// this method will used for validtion
 const validate = (values) => {
     const errors = {}
     // this condition checks employee number is provide or not

@@ -1,7 +1,9 @@
 import React from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
+import { BlogHtmlEditor } from '../blog/BlogHtmlEditor';
 
 
+// this render the input filed
 const renderInputFiled=({type, placeholder, infoText, name,  input, label,meta: { touched, invalid, error }, mainLableName, ...rest })=>(
 <div className="form-group">
       <input 
@@ -17,6 +19,7 @@ const renderInputFiled=({type, placeholder, infoText, name,  input, label,meta: 
 </div>
 )
 
+// this render the input text area 
 const renderInputTextArea=({placeholder, name, meta: { touched, invalid, error }, input, ...rest})=>(
   <div className="form-group">
     <textarea 
@@ -31,6 +34,7 @@ const renderInputTextArea=({placeholder, name, meta: { touched, invalid, error }
   </div>
 )
 
+// this will help to render matrial ui text field
 const renderTextFiled=({ type, placeholder, infoText, name,  input, label,meta: { touched, invalid, error }, mainLableName, ...rest })=>{
     return <Form.Group controlId={name}>
     <Form.Label>{label}</Form.Label>
@@ -45,6 +49,7 @@ const renderTextFiled=({ type, placeholder, infoText, name,  input, label,meta: 
   </Form.Group>
 }
 
+// this will help to render material ui clounm wise control 
 const renderTextFiledCol=({ type, placeholder, infoText, name, rows, input,meta: { touched, invalid, error }, label, mainLableName, ...rest })=>(
     <Form.Group as={Row} controlId={name}>
     <Form.Label column sm={2}> {label}: </Form.Label>
@@ -56,11 +61,13 @@ const renderTextFiledCol=({ type, placeholder, infoText, name, rows, input,meta:
       rows={rows}
       isValid={(touched && error) && !error.name} 
       {...input} 
-      {...rest} />
+      {...rest}
+    />
     </Col>
   </Form.Group>
 )
 
+// this will help to render material ui clounm wise text area 
 const renderTextAreaCol=({ type, placeholder, infoText, name, rows, input, label,meta: { touched, invalid, error }, mainLableName, ...rest })=>(
     <Form.Group as={Row} controlId={name}>
     <Form.Label column sm={2}> {label}: </Form.Label>
@@ -75,7 +82,7 @@ const renderTextAreaCol=({ type, placeholder, infoText, name, rows, input, label
     </Col>
   </Form.Group>
 )
-
+// this will help to render material ui file input
 const renderFile=({ type,placeholder, onChangeFunction, setMine, infoText, name, rows, input, label,meta: { touched, invalid, error }, mainLableName, ...rest })=>(
   <Form.Group as={Row} controlId={name}>
     <Form.Label column sm={2}> {label}: </Form.Label>
@@ -91,6 +98,7 @@ const renderFile=({ type,placeholder, onChangeFunction, setMine, infoText, name,
   </Form.Group>
 )
 
+// this will help to render material ui handel file handle change
 const handleChange = async(event, input, successFunction, setMine) => {
   event.preventDefault();
   let imageFile = event.target.files[0];
@@ -106,6 +114,16 @@ const handleChange = async(event, input, successFunction, setMine) => {
   }
 };
 
+// this will load html editor
+const renderHtmlEditor=({type, placeholder, infoText, name, rows, input, label,meta: { touched, invalid, error }, mainLableName, ...rest})=>{
+  return <Form.Group as={Row} controlId={name}>
+    <Form.Label column sm={2}> {label}: </Form.Label>
+    <Col sm={10}>
+      {BlogHtmlEditor({type, placeholder, infoText, name, rows, input, label,meta: { touched, invalid, error }, mainLableName, ...rest})}
+    </Col>
+  </Form.Group>
+}
+
 
 export{
     renderTextFiled,
@@ -113,5 +131,6 @@ export{
     renderTextAreaCol,
     renderFile,
     renderInputFiled,
-    renderInputTextArea
+    renderInputTextArea,
+    renderHtmlEditor
 }
