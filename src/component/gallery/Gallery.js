@@ -26,11 +26,11 @@ class Gallery extends Component {
     
     loadGallery=()=>{
         const { galleryList }=this.props.GalleryState
-        return <div class="gallery pt-5">
-		    <div class="container pt-xl-5 pt-lg-3">
-                <h3 class="title-w3 mb-sm-5 mb-4 text-dark text-center font-weight-bold">Gallery</h3>
-                <p class="title-para text-center mx-auto mb-sm-5 mb-4">This our Company gallery, here gives a quick review of our company.</p>
-                <ul class="demo">
+        return <div className="gallery pt-5">
+		    <div className="container pt-xl-5 pt-lg-3">
+                <h3 className="title-w3 mb-sm-5 mb-4 text-dark text-center font-weight-bold">Gallery</h3>
+                <p className="title-para text-center mx-auto mb-sm-5 mb-4">This our Company gallery, here gives a quick review of our company.</p>
+                <ul className="demo">
                    {(galleryList && galleryList.length >0)&& galleryList.map((item,key)=>this.loadRowGalleryImages(item,key))}
                 </ul>   
             </div> 
@@ -42,9 +42,9 @@ class Gallery extends Component {
     loadRowGalleryImages=(rowData, key)=>{
         let image='data:image/jpeg;base64,'+rowData.data;
         return <li key={key}>
-            <div class="gallery-grid1">
-                <img src={image} alt=" " class="img-fluid" />
-                <div class="p-mask">
+            <div className="gallery-grid1">
+                <img src={image} alt=" " className="img-fluid" />
+                <div className="p-mask">
                     <h4>{rowData.clientName}</h4>
                     <p>{rowData.clientCompnay}</p>
                 </div>

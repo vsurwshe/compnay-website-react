@@ -63,7 +63,7 @@ const LoadFrom=()=>{
 const CallSaveBlogAPI=async(props)=>{
     const { data, setLoading }=props
     const { fromAction, operation, initialValues }=props.mainProps
-    const { GetBlogList, CreateBlog, UpdateBlogRecord, DeleteBlogRecord}=props.mainProps.BlogAction
+    const { GetBlogList, CreateBlog, UpdateBlogRecord, DeleteBlogRecord, saveBlogRecord}=props.mainProps.BlogAction
     await setLoading(true);
     if(operation === FromActions.ED && initialValues){
         await UpdateBlogRecord(initialValues.blogId,data);
@@ -74,13 +74,7 @@ const CallSaveBlogAPI=async(props)=>{
     }
     setTimeout(async()=>{
         await GetBlogList();
-        if(operation === FromActions.ED && initialValues){
-            await alert("You blog updated Successfully");
-        }else if(operation === FromActions.DE && initialValues){
-            await alert("You blog Deleted Successfully");
-        }else{
-            await alert("You blog added Successfully");
-        }
+        await saveBlogRecord([]); 
         await setLoading(false);
         await fromAction();
     }, API_EXE_TIME)

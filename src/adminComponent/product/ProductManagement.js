@@ -5,49 +5,61 @@ import * as ProductAction from '../../redux/actions/ProductAction'
 import ProductTable from './ProductTable';
 import ProductFrom from './ProductFrom'
 import Loading from '../../component/utilities/loader/Loader'
+import { RenderToast } from '../adminUtilites/FromUtilites';
 
 class ProductManagement extends Component {
     state = {  
         loadProductListValue: false,
         fromAction:false,
         operation:"",
-        productData:[]
+        stateProductData:[]
     }
 
+    // this method will reuired fetch data
     componentDidMount=async()=>{
         const { productList }=this.props.ProductState
-        const { GetProductList }=this.props.ProductAction
+        const { GetProductList, saveProductRecord }=this.props.ProductAction
         await this.handleLoadProductListValue();
+        await saveProductRecord([]);
         (productList && productList.length <=0) && await GetProductList();
         await this.handleLoadProductListValue();
     }
 
+    // this method will handel loading value
     handleLoadProductListValue=()=>{this.setState({loadProductListValue : !this.state.loadProductListValue})}
 
-    handleFromAction=(operation, productData)=>{ this.setState({operation, productData, fromAction : !this.state.fromAction})}
+    // this method will handel form action
+    handleFromAction=(operation, stateProductData)=>{ this.setState({operation, stateProductData, fromAction : !this.state.fromAction})}
 
     render() { 
         const { fromAction }=this.state
         return fromAction ? this.loadProductFrom() : this.loadProductTable()
     }
 
+    // this method will loading from
     loadProductFrom=()=>{
-        const { productData, operation }=this.state
-        return <ProductFrom 
-            fromAction={this.handleFromAction}
-            initialValues={productData}
-            operation={operation}
-        />
+        const { stateProductData, operation }=this.state
+        const { productData }=this.props.ProductState
+        return <>
+            {(productData && productData.length >0) && <RenderToast message={productData} />}
+            <ProductFrom 
+                fromAction={this.handleFromAction}
+                initialValues={stateProductData}
+                operation={operation}
+            />
+        </>
     }
 
+    // this method will load product tabel
     loadProductTable=()=>{
         const { loadProductListValue }=this.state
-        return loadProductListValue ? this.loading() : this.loadingProductTable()
+        return loadProductListValue ? this.loading() : this.renderProductTable()
     }
 
     loading=()=><center><Loading /></center>
 
-    loadingProductTable=()=>{
+    // this method will render product table
+    renderProductTable=()=>{
         return <ProductTable  fromAction={this.handleFromAction} />
     }
 }

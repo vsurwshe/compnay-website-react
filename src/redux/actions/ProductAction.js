@@ -1,5 +1,6 @@
 import { CreateInstance } from "../../config/APIConfig"
 
+// this method will get product list
 const GetProductList=()=>{
     return(dispatch)=>{
         return CreateInstance()
@@ -13,6 +14,7 @@ const GetProductList=()=>{
     }
 }
 
+// this method will save product record
 const CreateProductRecord=(productData)=>{
     return(dispatch)=>{
         return CreateInstance()
@@ -26,6 +28,7 @@ const CreateProductRecord=(productData)=>{
     }
 }
 
+// this method will update product record
 const UpdateProductRecord=(id,productData)=>{
     return(dispatch)=>{
         return CreateInstance()
@@ -39,6 +42,7 @@ const UpdateProductRecord=(id,productData)=>{
     }
 }
 
+// this method will delete product record
 const DeleteProductRecord=(id)=>{
     return(dispatch)=>{
         return CreateInstance()

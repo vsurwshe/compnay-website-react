@@ -62,15 +62,15 @@ const LoadFrom=(props)=>{
         <Field name="clientName" component={renderTextFiledCol} type="text" label="Name" placeholder="enter image name"/>
         <Field name="clientCompany" component={renderTextFiledCol} type="text" label="Company Name" placeholder="enter company name" />
         { (operation === FromActions.ED || operation === FromActions.DE)? 
-             <img src={'data:image/jpeg;base64,'+initialValues.data} alt=" " style={{width:"25%", height:"20%", float:"right"}} class="img-fluid" />
+             <img src={'data:image/jpeg;base64,'+initialValues.data} alt=" " style={{width:"25%", height:"20%", float:"right"}} className="img-fluid" />
             :<Field name="galleryImage" component={renderFile} type="file" label="Gallery image"  setMine={setMine} onChangeFunction={setImageData}/>}
     </>
 }
 
 const CallSaveGallery=async(props)=>{
-    const { data, imageData, setLoading, mine }=props
-    const { fromAction, operation, initialValues }=props.mainProps
-    const { CreateGalleryRecord, UpdateGalleryRecord, DeleteGalleryRecord, GetGalleryList}=props.mainProps.GalleryAction
+    const { data, imageData, setLoading, mine, mainProps }=props
+    const { fromAction, operation, initialValues }=mainProps
+    const { CreateGalleryRecord, UpdateGalleryRecord, DeleteGalleryRecord, GetGalleryList, saveGalleryRecord}=mainProps.GalleryAction
     let newGalleryData={
         ...data,
         "data":imageData,
@@ -86,6 +86,7 @@ const CallSaveGallery=async(props)=>{
     }
     setTimeout(async()=>{
         await GetGalleryList();
+        await saveGalleryRecord([]);
         await setLoading(false);
         await fromAction();
     },API_EXE_TIME)

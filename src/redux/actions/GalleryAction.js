@@ -1,5 +1,6 @@
 import { CreateInstance } from "../../config/APIConfig"
 
+// this method will get gallery list
 const GetGalleryList=()=>{
     return(dispatch)=>{
         return CreateInstance()
@@ -13,6 +14,7 @@ const GetGalleryList=()=>{
     }
 }
 
+// this method will save gallery record
 const CreateGalleryRecord=(galleryData)=>{
     return(dispatch)=>{
         return CreateInstance()
@@ -26,6 +28,7 @@ const CreateGalleryRecord=(galleryData)=>{
     }
 }
 
+// this method will update gallery record
 const UpdateGalleryRecord=(id,galleryData)=>{
     return(dispatch)=>{
         return CreateInstance()
@@ -39,6 +42,7 @@ const UpdateGalleryRecord=(id,galleryData)=>{
     }
 }
 
+// this method will delete gallery record
 const DeleteGalleryRecord=(id)=>{
     return(dispatch)=>{
         return CreateInstance()

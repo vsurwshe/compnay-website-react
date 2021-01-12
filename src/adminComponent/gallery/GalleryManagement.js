@@ -5,49 +5,61 @@ import GalleryFrom from './GalleryFrom';
 import { connect } from 'react-redux';
 import * as GalleryAction from '../../redux/actions/GalleryAction'
 import { bindActionCreators } from 'redux';
+import { RenderToast } from '../adminUtilites/FromUtilites';
 class GalleryManagment extends Component {
     state = { 
         loadGalleryListValue:false,
         fromAction:false,
         operation:"",
-        galleryData:[]
+        stateGalleryData:[]
     }
 
+    // this will fetch required data
     componentDidMount=async()=>{
         const { galleryList }=this.props.GalleryState
-        const { GetGalleryList }=this.props.GalleryAction
+        const { GetGalleryList, saveGalleryRecord }=this.props.GalleryAction
         await this.handleLoadGalleryListValue();
+        await saveGalleryRecord([]);
         (galleryList && galleryList.length <=0) && await GetGalleryList();
         await this.handleLoadGalleryListValue();
     }
 
+    // this method will handel the load value
     handleLoadGalleryListValue=()=>{ this.setState({ loadGalleryListValue : !this.state.loadGalleryListValue})}
 
-    handleFormAction=(operation,galleryData)=>{ this.setState({operation, galleryData, fromAction: !this.state.fromAction})}
+    // this method will handel the form action
+    handleFormAction=(operation,stateGalleryData)=>{ this.setState({operation, stateGalleryData, fromAction: !this.state.fromAction})}
 
     render() { 
         const { fromAction }=this.state
         return fromAction ? this.loadGalleryFrom(): this.loadGalleryTable();
     }
 
+    // this method will load gallery tabel
     loadGalleryTable=()=>{
         const { loadGalleryListValue }=this.state
-        return loadGalleryListValue ? this.loading() : this.loadingGalleryTable();
+        return loadGalleryListValue ? this.loading() : this.renderGalleryTable();
     }
 
     loading=()=><center><Loading /></center>
 
-    loadingGalleryTable=()=>{
+    // this method will render gallery table
+    renderGalleryTable=()=>{
         return <GalleryTable  fromAction={this.handleFormAction} />
     }
 
+    // this method will load gallery form
     loadGalleryFrom=()=>{
-        const { galleryData,operation }=this.state
-        return <GalleryFrom 
-            fromAction={this.handleFormAction}
-            initialValues={galleryData}
-            operation={operation}
-        />
+        const { stateGalleryData,operation }=this.state
+        const { galleryData }=this.props.GalleryState
+        return <>
+            {(galleryData && galleryData.length >0)&& <RenderToast message={galleryData} />}
+            <GalleryFrom 
+                fromAction={this.handleFormAction}
+                initialValues={stateGalleryData}
+                operation={operation}
+            />
+        </>
     }
 }
 

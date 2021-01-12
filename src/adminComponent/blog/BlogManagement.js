@@ -6,48 +6,60 @@ import BlogFrom from './BlogFrom';
 import {Card} from 'react-bootstrap'
 import * as BlogAction from '../../redux/actions/BlogAction';
 import { bindActionCreators } from 'redux';
+import { RenderToast } from '../adminUtilites/FromUtilites';
 class BlogManagement extends Component {
     state = { 
         loadBlogTableValue: false,
         fromAction:false,
-        blogData:[],
+        stateBlogData:[],
         operation:""
     }
 
+    // this will fetch required data
     componentDidMount=async()=>{
         const { blogList }=this.props.BlogState
-        const { GetBlogList }=this.props.BlogAction
+        const { GetBlogList, saveBlogRecord }=this.props.BlogAction
         await this.handelBlogLoadList();
+        await saveBlogRecord([]);
         (blogList && blogList.length <=0) && await GetBlogList();
         await this.handelBlogLoadList();
     }
 
+    // this method will handel blog load value
     handelBlogLoadList=()=>{ this.setState({loadBlogTableValue: !this.state.loadBlogTableValue})}
 
-    handelFromAction=(operation,blogData)=>{ this.setState({ operation, blogData, fromAction: !this.state.fromAction})}
+    // this method will handel form action
+    handelFromAction=(operation,stateBlogData)=>{ this.setState({ operation, stateBlogData, fromAction: !this.state.fromAction})}
 
     render() { 
         const { fromAction }= this.state
         return <Card>{fromAction ? this.loadBlogFrom() : this.loadBlogTable()}</Card> 
     }
 
+    // this method will loading blog form
     loadBlogFrom=()=>{
-        const { blogData, operation }=this.state
-        return <BlogFrom
-            fromAction={this.handelFromAction} 
-            initialValues={blogData}
-            operation={operation}
-        />
+        const { stateBlogData, operation }=this.state
+        const { blogData }=this.props.BlogState
+        return <>
+            { (blogData && blogData.length >0) && <RenderToast message={blogData} />}
+            <BlogFrom
+                fromAction={this.handelFromAction} 
+                initialValues={stateBlogData}
+                operation={operation}
+            />
+        </>
     }
 
+    // this method will loading blog tabel
     loadBlogTable=()=>{
         const { loadBlogTableValue }=this.state
-        return loadBlogTableValue ?  this.loading(): this.loadingBlogTable();
+        return loadBlogTableValue ?  this.loading(): this.renderBlogTable();
     }
 
     loading=()=><center><Loading /></center>
 
-    loadingBlogTable=()=>{
+    //this method will render blog table
+    renderBlogTable=()=>{
         return <BlogTable 
             fromAction={this.handelFromAction}
         />

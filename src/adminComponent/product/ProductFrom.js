@@ -64,16 +64,16 @@ const LoadFrom=(props)=>{
         <Field name="clientName" component={renderTextFiledCol} type="text" label="Client Name" placeholder="enter client name"/>
         <Field name="companyName" component={renderTextFiledCol} type="text" label="Company Name" placeholder="enter company name" />
         { (operation === FromActions.ED || operation === FromActions.DE)? 
-             <img src={'data:image/jpeg;base64,'+initialValues.data} alt=" " style={{width:"25%", height:"20%", float:"right"}} class="img-fluid" />
+             <img src={'data:image/jpeg;base64,'+initialValues.data} alt=" " style={{width:"25%", height:"20%", float:"right"}} className="img-fluid" />
             :<Field name="productImage" component={renderFile} type="file" label="Prdouct image"  onChangeFunction={setImageData}/>}
         <Field name="productDiscription" component={renderTextAreaCol} type="textarea" rows="5" label="Discription" placeholder="enter product discription content" />
     </>
 }
 
 const CallSaveProduct=async(props)=>{
-    const { data, imageData, setLoading }=props
-    const { fromAction, operation, initialValues }=props.mainProps
-    const { CreateProductRecord, UpdateProductRecord, DeleteProductRecord, GetProductList}=props.mainProps.ProductAction
+    const { data, imageData, setLoading,mainProps }=props
+    const { fromAction, operation, initialValues }=mainProps
+    const { CreateProductRecord, UpdateProductRecord, DeleteProductRecord, GetProductList, saveProductRecord}=mainProps.ProductAction
     let newProductData={
         ...data,
         "data":imageData
@@ -88,13 +88,7 @@ const CallSaveProduct=async(props)=>{
     }
     setTimeout(async()=>{
         await GetProductList();
-        if(operation === FromActions.ED && initialValues){
-            await alert("You product updated Successfully");
-        }else if(operation === FromActions.DE && initialValues){
-            await alert("You product Deleted Successfully");
-        }else{
-            await alert("You product added Successfully");
-        }
+        await saveProductRecord([]);
         await setLoading(false);
         await fromAction();
     },API_EXE_TIME)

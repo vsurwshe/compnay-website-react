@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from "redux-thunk";
-import logger from 'redux-logger';
+// import logger from 'redux-logger';
 import { reducer as reduxFormReducer } from 'redux-form';
 import CommonState from "../redux/reducer/CommonState";
 import UserState from '../redux/reducer/UserState';
@@ -50,12 +50,14 @@ const saveToLocalStorage=(state)=>{
   });
   
   // this functions apply logger funtionality during development mode 
-  const enhancer= compose(applyMiddleware(thunk, logger));
+  const enhancer= compose(applyMiddleware(
+    thunk
+    // ,logger   /* this uncomment when we want see redux logger */
+  ));
   
   // this is common action through out application will be used
   const initialState = reducer({},{},{},{},{},{})
   const rootReducer = (state, action) => {
-    console.log("Called Root Reducer")
     if (action.type === 'CLEAR_DATA') {
       state = initialState
     }

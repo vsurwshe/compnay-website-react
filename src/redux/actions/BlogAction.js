@@ -1,5 +1,6 @@
 import { CreateInstance } from "../../config/APIConfig"
 
+// this action will get blog list
 const GetBlogList=()=>{
     return(dispatch)=>{
         return CreateInstance()
@@ -13,6 +14,7 @@ const GetBlogList=()=>{
     }
 }
 
+// this action will get comment list
 const GetCommentList=()=>{
     return(dispatch)=>{
         return CreateInstance()
@@ -26,6 +28,7 @@ const GetCommentList=()=>{
     }
 }
 
+// this action will get comment list by id
 const GetCommentListById=(id)=>{
     return(dispatch)=>{
         return CreateInstance()
@@ -39,6 +42,7 @@ const GetCommentListById=(id)=>{
     }
 }
 
+// this action will get catgeory list
 const GetCategoryBlogList=()=>{
     return(dispatch)=>{
         return CreateInstance()
@@ -52,6 +56,7 @@ const GetCategoryBlogList=()=>{
     }
 }
 
+// this action will save blog
 const CreateBlog=(blogData)=>{
     return(dispatch)=>{
         return CreateInstance()
@@ -65,6 +70,7 @@ const CreateBlog=(blogData)=>{
     }
 }
 
+// this action will save comment
 const CreateComment=(commentData)=>{
     return(dispatch)=>{
         return CreateInstance()
@@ -78,6 +84,7 @@ const CreateComment=(commentData)=>{
     }
 }
 
+// this action will update blog
 const UpdateBlogRecord=(id,blogData)=>{
     return(dispatch)=>{
         return CreateInstance()
@@ -91,6 +98,7 @@ const UpdateBlogRecord=(id,blogData)=>{
     }
 }
 
+// this action will delete blog
 const DeleteBlogRecord=(id)=>{
     return(dispatch)=>{
         return CreateInstance()

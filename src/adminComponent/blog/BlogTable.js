@@ -13,7 +13,7 @@ const BlogTable=(props)=>{
       { title: 'Sr.\u00a0No.', field: 'key', width: 20 },
       { title: 'Blog\u00a0Name', field: 'blogName' },
       { title: 'Blog\u00a0Writer', field: 'blogWriter' },
-      { title: 'Blog\u00a0Cateory', field: 'categorise', width: 30 },
+      { title: 'Blog\u00a0Cateory', field: 'blogCategory', width: 30 },
       {
         title: "",
         width:8,

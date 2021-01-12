@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
 import { BlogHtmlEditor } from '../blog/BlogHtmlEditor';
-
+import notify from 'devextreme/ui/notify';
 
 // this render the input filed
 const renderInputFiled=({type, placeholder, infoText, name,  input, label,meta: { touched, invalid, error }, mainLableName, ...rest })=>(
@@ -124,6 +124,10 @@ const renderHtmlEditor=({type, placeholder, infoText, name, rows, input, label,m
   </Form.Group>
 }
 
+// this will show the tast compoent
+const RenderToast=({message})=>{
+  return <>{notify({ message, width: "30%"},"info",1000)}</>
+}
 
 export{
     renderTextFiled,
@@ -132,5 +136,6 @@ export{
     renderFile,
     renderInputFiled,
     renderInputTextArea,
-    renderHtmlEditor
+    renderHtmlEditor,
+    RenderToast
 }
